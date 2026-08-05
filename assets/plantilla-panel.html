@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!-- Plantilla del panel GEO + SEO.
+     Sustituye los marcadores {{...}} y las filas de ejemplo. Conserva estilos
+     y el orden de las secciones: son los mismos cada semana, y esa constancia
+     es lo que permite comparar de un vistazo.
+     En Cowork, añade arriba el bloque cowork-artifact-meta y pasa el fichero
+     a update_artifact con el id geo-seo-<slug>.
+
+     IDIOMA: los rótulos están en español y se pueden traducir sin problema
+     (son texto plano). Pero decídelo en la línea base y no lo cambies después:
+     si la semana 1 dice «Visibilidad GEO» y la 4 dice «AI Visibility», nadie
+     sabe si está mirando la misma métrica. El panel va en el idioma del
+     usuario; la batería, en el del mercado. Ver references/idiomas.md. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Panel GEO + SEO · {{DOMINIO}}</title>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#faf9f7; --card:#ffffff; --ink:#1a1a1a; --mut:#6b6b6b; --line:#e6e3de;
+  --red:#c0392b; --redbg:#fdecea; --amb:#b8860b; --ambbg:#fdf6e3; --grn:#1e7a4f; --grnbg:#e8f5ef;
+  --acc:#2f4f8f; --accbg:#eef2fa;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;padding:22px}
+.wrap{max-width:1080px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.4px}
+.sub{color:var(--mut);font-size:13.5px;margin-bottom:10px}
+.delta{background:var(--accbg);border:1px solid #c9d5ef;border-left:4px solid var(--acc);border-radius:10px;padding:13px 16px;margin:0 0 20px;font-size:13.5px}
+.delta b{color:var(--acc)}
+h2{font-size:17px;margin:34px 0 12px;letter-spacing:-.2px;display:flex;align-items:center;gap:8px}
+h2 .n{width:22px;height:22px;border-radius:6px;background:var(--acc);color:#fff;font-size:12px;display:grid;place-items:center;font-weight:600;flex:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.score{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.score .lab{font-size:11.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--mut);font-weight:600}
+.score .val{font-size:34px;font-weight:700;letter-spacing:-1.5px;margin:6px 0 2px}
+.score .note{font-size:12.5px;color:var(--mut)}
+.v-red .val{color:var(--red)} .v-amb .val{color:var(--amb)} .v-grn .val{color:var(--grn)}
+.alert{background:var(--redbg);border:1px solid #f3c9c3;border-left:4px solid var(--red);border-radius:10px;padding:16px 18px;margin:18px 0}
+.alert b{color:var(--red)}
+.win{background:var(--grnbg);border:1px solid #b8ddc9;border-left:4px solid var(--grn);border-radius:10px;padding:16px 18px;margin:18px 0}
+.win b{color:var(--grn)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);padding:9px 10px;border-bottom:1px solid var(--line);font-weight:600}
+td{padding:10px;border-bottom:1px solid #f0eeea;vertical-align:top}
+tr:last-child td{border-bottom:none}
+.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.p-ko{background:var(--redbg);color:var(--red)} .p-wr{background:var(--ambbg);color:var(--amb)} .p-ok{background:var(--grnbg);color:var(--grn)}
+.p-crit{background:var(--red);color:#fff} .p-alt{background:var(--amb);color:#fff} .p-med{background:var(--acc);color:#fff}
+.quote{font-size:13px;color:var(--mut);font-style:italic;border-left:2px solid var(--line);padding-left:10px;margin-top:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}}
+ul{margin:6px 0 0;padding-left:18px} li{margin-bottom:5px}
+.foot{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);color:var(--mut);font-size:12px}
+code{background:#f2f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
+.chartbox{height:230px}
+.grupo td{background:#f7f5f2;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);padding:8px 10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Panel GEO + SEO — {{SUJETO}}</h1>
+<div class="sub">{{ETIQUETA_SEMANA}} · <b>{{FECHA_LARGA}}</b> · <code>{{DOMINIO}}</code> · Se actualiza {{CADENCIA}}</div>
+
+<!-- Desde la 2ª medición. Es lo primero y a menudo lo único que se lee:
+     qué mejoró con cifras, qué se resolvió, y qué sigue igual. Incluir lo que
+     NO avanzó es lo que mantiene el informe creíble. -->
+<div class="delta">
+  <b>Cambios desde la semana anterior.</b> {{RESUMEN_CAMBIOS}}
+</div>
+
+<!-- Cada tarjeta con su valor anterior en la nota: un número sin delta no informa. -->
+<div class="scores">
+  <div class="score v-amb"><div class="lab">Visibilidad GEO</div><div class="val">{{GEO}} / {{GEO_TOTAL}}</div><div class="note">{{GEO_NOTA}}</div></div>
+  <div class="score v-grn"><div class="lab">SEO técnico</div><div class="val">{{SEO}} / 100</div><div class="note">{{SEO_NOTA}}</div></div>
+  <div class="score v-grn"><div class="lab">Páginas indexables</div><div class="val">{{URLS}}</div><div class="note">{{URLS_NOTA}}</div></div>
+  <div class="score v-grn"><div class="lab">Rendimiento</div><div class="val">{{PERF}}</div><div class="note">{{PERF_NOTA}}</div></div>
+</div>
+
+<!-- .win para lo resuelto, .alert para el bloqueante nº1 de esta semana.
+     Uno de cada como máximo: si todo se destaca, nada destaca. -->
+<div class="win"><b>✓ Resuelto: {{TITULO_LOGRO}}</b><br>{{TEXTO_LOGRO}}</div>
+<div class="alert"><b>⚠ El problema número 1 esta semana: {{TITULO_BLOQUEANTE}}</b><br>{{TEXTO_BLOQUEANTE}}</div>
+
+<h2><span class="n">1</span> Resultados GEO — las {{N_CONSULTAS}} consultas ejecutadas</h2>
+<div class="card">
+<p style="margin:0 0 14px;font-size:13.5px;color:var(--mut)">{{NOTA_METODO}}</p>
+<table>
+<thead><tr><th style="width:24%">Consulta</th><th style="width:11%">Motor</th><th style="width:11%">¿Apareces?</th><th>Qué respondió</th></tr></thead>
+<tbody>
+<tr class="grupo"><td colspan="4">A · Reconocimiento de entidad — <span style="color:var(--grn)">{{A_ACIERTOS}}</span></td></tr>
+<tr>
+  <td>{{CONSULTA}}</td>
+  <td>{{MOTOR}}</td>
+  <!-- p-ok recomendado · p-wr citado pero no nombrado · p-ko ausente -->
+  <td><span class="pill p-ok">Sí · correcta</span></td>
+  <td>{{QUE_RESPONDIO}}<div class="quote">«{{CITA_LITERAL}}»</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">1b</span> Lo que los motores te han dicho que necesitan</h2>
+<div class="card">
+<p style="margin:0 0 12px;font-size:13.5px">Frases literales de esta semana en las que el motor explica qué evidencia busca. Son las más accionables porque no hay que interpretarlas.</p>
+<table>
+<thead><tr><th style="width:44%">Lo que dijo el motor</th><th>Lo que significa</th></tr></thead>
+<tbody>
+<tr><td><i>«{{FRASE}}»</i> — {{MOTOR}}</td><td>{{INTERPRETACION}}</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">2</span> El hallazgo aprovechable</h2>
+<div class="grid2">
+  <div class="card"><b style="color:var(--grn)">{{TITULO_FORTALEZA}}</b><p style="margin:8px 0 0;font-size:13.5px">{{TEXTO_FORTALEZA}}</p></div>
+  <div class="card"><b style="color:var(--acc)">{{TITULO_HUECO}}</b><p style="margin:8px 0 0;font-size:13.5px">{{TEXTO_HUECO}}</p></div>
+</div>
+
+<h2><span class="n">3</span> Auditoría técnica</h2>
+<div class="card">
+<p style="margin:0 0 14px;font-size:13px;color:var(--mut)">Rastreo del DOM renderizado y comprobación de códigos de respuesta el {{FECHA_CORTA}}.</p>
+<table>
+<thead><tr><th style="width:22%">Elemento</th><th style="width:13%">Estado</th><th>Detalle</th></tr></thead>
+<tbody>
+<tr><td>{{ELEMENTO}}</td><td><span class="pill p-ok">Resuelto</span></td><td>{{DETALLE}}</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">3b</span> Huella digital fuera de la web</h2>
+<div class="card">
+<table>
+<thead><tr><th style="width:16%">Fuente</th><th style="width:13%">Estado</th><th>Detalle</th></tr></thead>
+<tbody>
+<tr><td>LinkedIn</td><td><span class="pill p-wr">Parcial</span></td><td>{{DETALLE}}</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">4</span> Plan de acción priorizado</h2>
+<div class="card">
+<p style="margin:0 0 12px;font-size:13.5px;color:var(--mut)">{{NOTA_RETIRADAS}}</p>
+<table>
+<thead><tr><th style="width:8%">Prioridad</th><th style="width:30%">Acción</th><th>Por qué mueve la aguja</th></tr></thead>
+<tbody>
+<tr><td><span class="pill p-crit">1</span></td><td>{{ACCION}}</td><td>{{JUSTIFICACION}}</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">5</span> Quién ocupa hoy tu sitio</h2>
+<div class="card">
+<table>
+<thead><tr><th style="width:28%">Consulta</th><th style="width:14%">Tu posición</th><th>Recomendados por los LLMs</th></tr></thead>
+<tbody>
+<tr><td>{{CONSULTA}}</td><td><span class="pill p-ko">Fuera</span></td><td>{{COMPETIDORES}}</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">6</span> Evolución</h2>
+<div class="card">
+  <div class="chartbox"><canvas id="hist"></canvas></div>
+  <p style="font-size:12.5px;color:var(--mut);margin:12px 0 0">{{NOTA_TENDENCIA}}</p>
+</div>
+
+<div class="foot">{{METODOLOGIA}}</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<script>
+// AÑADIR un objeto por medición. No borrar los anteriores: el histórico es
+// la razón de existir del seguimiento.
+const HIST = [
+  { fecha: "{{ETIQUETA}}", geo: 0, geoTotal: 22, seo: 0 }
+];
+new Chart(document.getElementById('hist'), {
+  type: 'line',
+  data: {
+    labels: HIST.map(h => h.fecha),
+    datasets: [
+      { label: 'Visibilidad GEO (% de consultas en las que apareces)', data: HIST.map(h => h.geoTotal ? Math.round(h.geo / h.geoTotal * 100) : 0), borderColor: '#c0392b', backgroundColor: 'rgba(192,57,43,.08)', tension: .3, fill: true, pointRadius: 5 },
+      { label: 'SEO técnico (0-100)', data: HIST.map(h => h.seo), borderColor: '#2f4f8f', backgroundColor: 'rgba(47,79,143,.08)', tension: .3, fill: true, pointRadius: 5 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    scales: { y: { min: 0, max: 100 } },
+    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
+  }
+});
+</script>
+</body>
+</html>

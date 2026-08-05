@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
+.venv/
+venv/
+
+# Datos de análisis: no versionar el histórico de clientes ni los paneles
+# generados. Contienen nombres, dominios y diagnósticos de terceros.
+geo-seo/
+estado.json
+panel.html
+transcripcion-*.md
+informe-general-*.md

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!-- PANEL DE DEMOSTRACIÓN — datos ficticios de una marca inventada.
+     Sirve para ilustrar el formato de salida de la skill sin exponer
+     los datos de nadie. Ábrelo en el navegador y captura. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Panel GEO + SEO · demo</title>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#faf9f7; --card:#ffffff; --ink:#1a1a1a; --mut:#6b6b6b; --line:#e6e3de;
+  --red:#c0392b; --redbg:#fdecea; --amb:#b8860b; --ambbg:#fdf6e3; --grn:#1e7a4f; --grnbg:#e8f5ef;
+  --acc:#2f4f8f; --accbg:#eef2fa;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;padding:22px}
+.wrap{max-width:1080px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.4px}
+.sub{color:var(--mut);font-size:13.5px;margin-bottom:10px}
+.demo{background:#fff6d6;border:1px solid #e8d69a;border-radius:8px;padding:9px 13px;font-size:12.5px;color:#7a5c00;margin:0 0 16px}
+.delta{background:var(--accbg);border:1px solid #c9d5ef;border-left:4px solid var(--acc);border-radius:10px;padding:13px 16px;margin:0 0 20px;font-size:13.5px}
+.delta b{color:var(--acc)}
+h2{font-size:17px;margin:34px 0 12px;letter-spacing:-.2px;display:flex;align-items:center;gap:8px}
+h2 .n{width:22px;height:22px;border-radius:6px;background:var(--acc);color:#fff;font-size:12px;display:grid;place-items:center;font-weight:600;flex:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.score{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.score .lab{font-size:11.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--mut);font-weight:600}
+.score .val{font-size:34px;font-weight:700;letter-spacing:-1.5px;margin:6px 0 2px}
+.score .note{font-size:12.5px;color:var(--mut)}
+.v-red .val{color:var(--red)} .v-amb .val{color:var(--amb)} .v-grn .val{color:var(--grn)}
+.alert{background:var(--redbg);border:1px solid #f3c9c3;border-left:4px solid var(--red);border-radius:10px;padding:16px 18px;margin:18px 0}
+.alert b{color:var(--red)}
+.win{background:var(--grnbg);border:1px solid #b8ddc9;border-left:4px solid var(--grn);border-radius:10px;padding:16px 18px;margin:18px 0}
+.win b{color:var(--grn)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);padding:9px 10px;border-bottom:1px solid var(--line);font-weight:600}
+td{padding:10px;border-bottom:1px solid #f0eeea;vertical-align:top}
+tr:last-child td{border-bottom:none}
+.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.p-ko{background:var(--redbg);color:var(--red)} .p-wr{background:var(--ambbg);color:var(--amb)} .p-ok{background:var(--grnbg);color:var(--grn)}
+.p-crit{background:var(--red);color:#fff} .p-alt{background:var(--amb);color:#fff} .p-med{background:var(--acc);color:#fff}
+.quote{font-size:13px;color:var(--mut);font-style:italic;border-left:2px solid var(--line);padding-left:10px;margin-top:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}}
+.foot{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);color:var(--mut);font-size:12px}
+code{background:#f2f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
+.chartbox{height:230px}
+.grupo td{background:#f7f5f2;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);padding:8px 10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Panel GEO + SEO — Marca de Ejemplo</h1>
+<div class="sub">Semana 2 · <b>3 agosto 2026</b> · <code>ejemplo.com</code> · Se actualiza cada lunes a las 9:00</div>
+
+<div class="demo">Panel de demostración con datos ficticios. Ilustra el formato de salida de la skill; no corresponde a ninguna marca real.</div>
+
+<div class="delta">
+  <b>Cambios desde la semana anterior.</b>
+  La colisión de entidad con la homónima <b>ha desaparecido</b> de las respuestas de Perplexity, que ahora describe correctamente el perfil profesional y <b>cita <code>ejemplo.com</code> como fuente</b>. Primeras apariciones del histórico: <b>4 de 22 consultas</b> (eran 0). La arquitectura ha pasado de 3 a <b>12 URLs indexables</b> con contenido real. <b>Sin avance:</b> ChatGPT sigue sin encontrarla —solo rastrea perfiles sociales, no la web—, el hub de contenidos sigue vacío y los nichos de producto siguen a cero.
+</div>
+
+<div class="scores">
+  <div class="score v-amb"><div class="lab">Visibilidad GEO</div><div class="val">4 / 22</div><div class="note">Era 0/22. Citada como fuente en 6 consultas</div></div>
+  <div class="score v-grn"><div class="lab">SEO técnico</div><div class="val">84 / 100</div><div class="note">Era 61. Base semántica y arquitectura resueltas</div></div>
+  <div class="score v-grn"><div class="lab">Páginas indexables</div><div class="val">12</div><div class="note">Eran 3</div></div>
+  <div class="score v-grn"><div class="lab">Rendimiento</div><div class="val">Bien</div><div class="note">TTFB 88 ms · carga 1,1 s · HTTP/2 · SSR</div></div>
+</div>
+
+<div class="win">
+  <b>✓ Resuelto: la colisión de entidad.</b><br>
+  La semana pasada, a la pregunta de quién es el sujeto, el motor respondía describiendo a <b>otra persona</b> con el mismo nombre y más presencia indexada. Esa respuesta ya no aparece: ahora el perfil correcto es el primero y <code>ejemplo.com</code> figura entre las fuentes.<br><br>
+  <b>Queda un residuo:</b> el motor todavía pide desambiguación antes de responder, porque compite con ruido de otros homónimos. La entidad existe, pero aún no es la acepción por defecto del nombre.
+</div>
+
+<div class="alert">
+  <b>⚠ El problema número 1 esta semana: un motor lee la web y el otro no.</b><br>
+  Perplexity ya cita <code>ejemplo.com</code>. ChatGPT, con búsqueda activa, cita <b>solo perfiles sociales</b> y responde que no encuentra trayectoria pública verificable. Los dos usan índices distintos, así que el diagnóstico es distinto: aquí el problema no es la web, es que <b>el buscador que alimenta a ChatGPT no la tiene indexada</b>. La acción es dar de alta el sitemap en su herramienta para webmasters, no seguir tocando el sitio.
+</div>
+
+<h2><span class="n">1</span> Resultados GEO — las 22 consultas ejecutadas</h2>
+<div class="card">
+<p style="margin:0 0 14px;font-size:13.5px;color:var(--mut)">20 preguntas en Perplexity más dos contrastes en ChatGPT y Gemini. La transcripción literal completa se genera en un fichero aparte.</p>
+<table>
+<thead><tr><th style="width:24%">Consulta</th><th style="width:11%">Motor</th><th style="width:12%">¿Aparece?</th><th>Qué respondió</th></tr></thead>
+<tbody>
+<tr class="grupo"><td colspan="4">A · Reconocimiento de entidad — <span style="color:var(--grn)">3 de 5</span></td></tr>
+<tr>
+  <td>A1 · ¿Quién es [nombre] y cuál es su trayectoria?</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ok">Sí · correcta</span></td>
+  <td>Describe la trayectoria real y <b>cita la web</b> entre sus fuentes. La homónima ha desaparecido de la respuesta.<div class="quote">«…la profesional que se presenta como especialista en [sector], con más de una década en…»</div></td>
+</tr>
+<tr>
+  <td>A1 · Misma pregunta, especificando la profesión</td>
+  <td>ChatGPT (web)</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Solo cita perfiles sociales. Enumera la evidencia que le falta.<div class="quote">«No aparecen perfiles técnicos públicos, ponencias, publicaciones ni referencias en medios especializados asociados a ese nombre»</div></td>
+</tr>
+<tr>
+  <td>A2 · Perfil profesional y especialidad</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ok">Sí · correcta</span></td>
+  <td>Reconstrucción fiel párrafo a párrafo, con cita a la web en cada bloque.</td>
+</tr>
+<tr>
+  <td>A3 · Productos o servicios desarrollados</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ok">Sí · correcta</span></td>
+  <td>Nombra los cinco productos del portafolio. Eran invisibles en la línea base.</td>
+</tr>
+
+<tr class="grupo"><td colspan="4">B · Nicho principal — <span style="color:var(--amb)">1 de 4</span></td></tr>
+<tr>
+  <td>B1 · Encargo concreto con restricción normativa</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ok">Sí · nº 1</span></td>
+  <td><b>Recomendada en primer lugar</b>, por delante de tres empresas del sector. Justifica con detalles que solo están en la página de servicios.<div class="quote">«Ideal si buscas una persona de referencia, no solo una empresa»</div></td>
+</tr>
+<tr>
+  <td>B2 · Perfil híbrido del mismo nicho</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Sigue interpretando «especialista» como «empresa». Falta el término clave ligado a un caso propio con nombre.</td>
+</tr>
+<tr>
+  <td>B3 · ¿Existe esta categoría de profesional?</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Describe con precisión el perfil y cita perfiles sociales como fuente principal, pero no lo encuentra. Causa probable: el nombre visible del perfil no coincide con el nombre por el que se busca.</td>
+</tr>
+<tr>
+  <td>B4 · Quién puede auditar este tipo de proyecto</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-wr">Citada, no nombrada</span></td>
+  <td>La web aparece <b>3 veces como cita</b> alimentando la respuesta, pero el motor se queda con la categoría genérica. El contenido describe capacidades, no una oferta atribuible con método y entregable.</td>
+</tr>
+
+<tr class="grupo"><td colspan="4">C · Segundo nicho — <span style="color:var(--red)">0 de 4</span></td></tr>
+<tr>
+  <td>C1 · Recomiéndame un especialista en [tecnología]</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Cita un <b>directorio agregador</b> como fuente. Entrar en él es más rápido que construir autoridad propia.</td>
+</tr>
+<tr>
+  <td>C2 · Freelance para implantar [servicio]</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Deriva a plataformas de freelance y a «rankings de 2026». El servicio está declarado en el schema, pero sin caso ni cifra no compite.</td>
+</tr>
+<tr>
+  <td>C3 · Expertos en [herramienta]</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Nombra a un competidor individual con <b>tarifa publicada</b>, «casos reales en producción» y respaldo de una <b>fuente de terceros</b>. Ese es el listón.</td>
+</tr>
+<tr>
+  <td>C4 · Quién tiene casos de éxito reales</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>La pregunta pide «casos reales» y el motor responde con «casos <b>documentados</b>». Sin sector, problema y cifra, no hay nada citable.</td>
+</tr>
+
+<tr class="grupo"><td colspan="4">D · Producto — <span style="color:var(--red)">0 de 4</span></td></tr>
+<tr>
+  <td>D1 · Productos destacados de la categoría</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Gana un competidor por <b>declararlo por escrito</b> en una página propia, no por tener mejor producto.<div class="quote">«Se describe explícitamente como… accesible desde el navegador»</div></td>
+</tr>
+<tr>
+  <td>D2 · Alternativas con modelo de suscripción</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Admite que no hay referencia pública. Hueco libre. Dice dónde mira: repositorios públicos y portafolios.</td>
+</tr>
+<tr>
+  <td>D3 · Integración técnica poco común</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Confirma que <b>el nicho está vacío</b> y entrega el vocabulario exacto que buscaría. La aparición más fácil de ganar.</td>
+</tr>
+<tr>
+  <td>D4 · Quién ha desarrollado este tipo de solución</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Solo puede ofrecer productos con autores anónimos. Una persona con nombre no tendría competencia identificable.</td>
+</tr>
+
+<tr class="grupo"><td colspan="4">E · Negocio y consultoría — <span style="color:var(--red)">0 de 5</span></td></tr>
+<tr>
+  <td>E1 · Perfil híbrido poco habitual</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Nombra a una persona concreta, citando su perfil social. La barrera ha bajado y la puerta es ese perfil.</td>
+</tr>
+<tr>
+  <td>E1 · Misma pregunta ampliada</td>
+  <td>Gemini</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>No cita fuentes web. Su valor es otro: <b>regala la taxonomía del mercado</b> y tres directorios de entrada.<div class="quote">«perfil unicornio» + cadena de búsqueda booleana lista para usar</div></td>
+</tr>
+<tr>
+  <td>E2 · Consultoría especializada</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Solo consultoras. Es la consulta donde la autoridad externa existente está peor aprovechada.</td>
+</tr>
+<tr>
+  <td>E3 · Certificaciones + servicio</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Construye una <b>tabla comparativa</b>. Para entrar hay que tener las cuatro celdas rellenables desde una sola página.</td>
+</tr>
+<tr>
+  <td>E4 · Rescate de un proyecto estancado</td>
+  <td>Perplexity</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td>Todos los recomendados venden <b>un método con nombre y plazo</b>. La web ofrece el servicio sin bautizar el proceso. Es cambio de copy, no de desarrollo.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">1b</span> Lo que los motores te han dicho que necesitan</h2>
+<div class="card">
+<p style="margin:0 0 12px;font-size:13.5px">Frases literales en las que el motor explica qué evidencia busca. Son las más accionables porque no hay que interpretarlas.</p>
+<table>
+<thead><tr><th style="width:44%">Lo que dijo el motor</th><th>Lo que significa</th></tr></thead>
+<tbody>
+<tr><td><i>«No aparecen perfiles técnicos públicos, ponencias, publicaciones ni referencias en medios especializados»</i></td><td>Criterio de admisión a la categoría. Sin rastro público verificable no entras, por buena que sea la web.</td></tr>
+<tr><td><i>«Ideal si buscas una persona de referencia, no solo una empresa»</i></td><td>El motor ha encontrado solo el argumento diferencial. Conviene convertirlo en copy explícito.</td></tr>
+<tr><td><i>«Se describe explícitamente como…»</i> (sobre el competidor que gana)</td><td>Gana por declararlo por escrito, no por mejor producto. Hace falta una URL que lo diga.</td></tr>
+<tr><td>Competidor con <i>«casos reales en producción»</i>, tarifa publicada y aval de un tercero</td><td>La pieza que falta es la cita externa: un ranking o comparativa ajena, no solo la web propia.</td></tr>
+<tr><td>Directorios citados como fuente en 3 consultas distintas</td><td>Estar en un agregador que el motor ya cita es un atajo frente a construir autoridad desde cero.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">2</span> Plan de acción priorizado</h2>
+<div class="card">
+<p style="margin:0 0 12px;font-size:13.5px;color:var(--mut)">Reordenado cada semana. Las acciones 1, 2 y 4 de la semana anterior están resueltas y se retiran del plan.</p>
+<table>
+<thead><tr><th style="width:8%">Prioridad</th><th style="width:30%">Acción</th><th>Por qué mueve la aguja</th></tr></thead>
+<tbody>
+<tr><td><span class="pill p-crit">1</span></td><td>Corregir el nombre visible del perfil social</td><td><b>Dos minutos, impacto inmediato.</b> Es la única fuente que lee uno de los motores, y hoy el nombre no coincide con el de la consulta. Desbloquea tres consultas de golpe.</td></tr>
+<tr><td><span class="pill p-crit">2</span></td><td>Alta en la herramienta para webmasters del buscador que alimenta al motor bloqueado</td><td>Un motor ya rastrea la web y el otro no. Enviar el sitemap allí es la vía directa para replicar el resultado que ya funciona.</td></tr>
+<tr><td><span class="pill p-crit">3</span></td><td>Una página por producto, con cifra medible</td><td>Los competidores ganan las consultas de producto solo por tener una página que lo explica. Es la aparición más barata que queda.</td></tr>
+<tr><td><span class="pill p-alt">4</span></td><td>Bautizar los métodos de servicio</td><td>Cambio de copy, no de desarrollo. Un método con nombre, fases y plazo se cita; un servicio sin explicar, no.</td></tr>
+<tr><td><span class="pill p-alt">5</span></td><td>Abrir el hub de contenidos con 3 artículos de nicho</td><td>Los temas vienen dictados por los propios motores: el vocabulario exacto que dijeron buscar y no encontrar.</td></tr>
+<tr><td><span class="pill p-med">6</span></td><td>Alta en los directorios citados</td><td>Los tres agregadores que aparecieron como fuente esta semana.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">3</span> Evolución</h2>
+<div class="card">
+  <div class="chartbox"><canvas id="hist"></canvas></div>
+  <p style="font-size:12.5px;color:var(--mut);margin:12px 0 0">El salto GEO de esta semana confirma que el trabajo semántico se traduce en apariciones en cuanto los rastreadores vuelven a pasar. El SEO de buscadores clásicos tarda entre 3 y 6 meses.</p>
+</div>
+
+<div class="foot">
+  Panel de demostración de la skill <b>analisis-geo-seo</b>. Datos ficticios. La metodología real: rastreo del DOM renderizado, comprobación de códigos de respuesta y métricas de Navigation Timing; 22 consultas lanzadas en las interfaces web de Perplexity, ChatGPT con búsqueda activa y Gemini. Las puntuaciones son estimaciones ponderadas sobre los criterios auditados, no una medición de Lighthouse.
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<script>
+const HIST = [
+  { fecha: "20 jul", geo: 0, geoTotal: 22, seo: 44 },
+  { fecha: "27 jul", geo: 0, geoTotal: 22, seo: 61 },
+  { fecha: "3 ago",  geo: 4, geoTotal: 22, seo: 84 }
+];
+new Chart(document.getElementById('hist'), {
+  type: 'line',
+  data: {
+    labels: HIST.map(h => h.fecha),
+    datasets: [
+      { label: 'Visibilidad GEO (% de consultas en las que aparece)', data: HIST.map(h => Math.round(h.geo / h.geoTotal * 100)), borderColor: '#c0392b', backgroundColor: 'rgba(192,57,43,.08)', tension: .3, fill: true, pointRadius: 5 },
+      { label: 'SEO técnico (0-100)', data: HIST.map(h => h.seo), borderColor: '#2f4f8f', backgroundColor: 'rgba(47,79,143,.08)', tension: .3, fill: true, pointRadius: 5 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    scales: { y: { min: 0, max: 100 } },
+    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
+  }
+});
+</script>
+</body>
+</html>
