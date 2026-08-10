@@ -4,13 +4,7 @@
      y el orden de las secciones: son los mismos cada semana, y esa constancia
      es lo que permite comparar de un vistazo.
      En Cowork, añade arriba el bloque cowork-artifact-meta y pasa el fichero
-     a update_artifact con el id geo-seo-<slug>.
-
-     IDIOMA: los rótulos están en español y se pueden traducir sin problema
-     (son texto plano). Pero decídelo en la línea base y no lo cambies después:
-     si la semana 1 dice «Visibilidad GEO» y la 4 dice «AI Visibility», nadie
-     sabe si está mirando la misma métrica. El panel va en el idioma del
-     usuario; la batería, en el del mercado. Ver references/idiomas.md. -->
+     a update_artifact con el id geo-seo-<slug>. -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -74,7 +68,9 @@ code{background:#f2f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
 
 <!-- Cada tarjeta con su valor anterior en la nota: un número sin delta no informa. -->
 <div class="scores">
-  <div class="score v-amb"><div class="lab">Visibilidad GEO</div><div class="val">{{GEO}} / {{GEO_TOTAL}}</div><div class="note">{{GEO_NOTA}}</div></div>
+  <div class="score v-amb"><div class="lab">Perplexity</div><div class="val">{{PPX}} / {{PPX_TOTAL}}</div><div class="note">{{PPX_NOTA}}</div></div>
+  <div class="score v-amb"><div class="lab">ChatGPT</div><div class="val">{{GPT}} / {{GPT_TOTAL}}</div><div class="note">{{GPT_NOTA}}</div></div>
+  <div class="score v-amb"><div class="lab">Gemini</div><div class="val">{{GEM}} / {{GEM_TOTAL}}</div><div class="note">{{GEM_NOTA}}</div></div>
   <div class="score v-grn"><div class="lab">SEO técnico</div><div class="val">{{SEO}} / 100</div><div class="note">{{SEO_NOTA}}</div></div>
   <div class="score v-grn"><div class="lab">Páginas indexables</div><div class="val">{{URLS}}</div><div class="note">{{URLS_NOTA}}</div></div>
   <div class="score v-grn"><div class="lab">Rendimiento</div><div class="val">{{PERF}}</div><div class="note">{{PERF_NOTA}}</div></div>
@@ -85,7 +81,7 @@ code{background:#f2f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
 <div class="win"><b>✓ Resuelto: {{TITULO_LOGRO}}</b><br>{{TEXTO_LOGRO}}</div>
 <div class="alert"><b>⚠ El problema número 1 esta semana: {{TITULO_BLOQUEANTE}}</b><br>{{TEXTO_BLOQUEANTE}}</div>
 
-<h2><span class="n">1</span> Resultados GEO — las {{N_CONSULTAS}} consultas ejecutadas</h2>
+<h2><span class="n">1</span> Resultados GEO — {{N_PREGUNTAS}} preguntas x 3 motores</h2>
 <div class="card">
 <p style="margin:0 0 14px;font-size:13.5px;color:var(--mut)">{{NOTA_METODO}}</p>
 <table>
@@ -176,16 +172,22 @@ code{background:#f2f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
 <script>
 // AÑADIR un objeto por medición. No borrar los anteriores: el histórico es
 // la razón de existir del seguimiento.
+// `a` = apariciones (estado "recomendado"); `t` = consultas realmente lanzadas
+// en ese motor esa semana. Guardar `t` por motor permite representar con
+// honestidad una semana en la que un motor agoto su cuota de busqueda.
 const HIST = [
-  { fecha: "{{ETIQUETA}}", geo: 0, geoTotal: 22, seo: 0 }
+  { fecha: "{{ETIQUETA}}", seo: 0, ppx:{a:0,t:15}, gpt:{a:0,t:15}, gem:{a:0,t:15} }
 ];
+const pct = m => HIST.map(h => (h[m] && h[m].t) ? Math.round(h[m].a / h[m].t * 100) : 0);
 new Chart(document.getElementById('hist'), {
   type: 'line',
   data: {
     labels: HIST.map(h => h.fecha),
     datasets: [
-      { label: 'Visibilidad GEO (% de consultas en las que apareces)', data: HIST.map(h => h.geoTotal ? Math.round(h.geo / h.geoTotal * 100) : 0), borderColor: '#c0392b', backgroundColor: 'rgba(192,57,43,.08)', tension: .3, fill: true, pointRadius: 5 },
-      { label: 'SEO técnico (0-100)', data: HIST.map(h => h.seo), borderColor: '#2f4f8f', backgroundColor: 'rgba(47,79,143,.08)', tension: .3, fill: true, pointRadius: 5 }
+      { label: 'Perplexity (% de consultas en las que apareces)', data: pct('ppx'), borderColor: '#c0392b', tension: .3, fill: false, pointRadius: 5 },
+      { label: 'ChatGPT (%)', data: pct('gpt'), borderColor: '#1e7a4f', tension: .3, fill: false, pointRadius: 5 },
+      { label: 'Gemini (%)', data: pct('gem'), borderColor: '#b8860b', tension: .3, fill: false, pointRadius: 5 },
+      { label: 'SEO técnico (0-100)', data: HIST.map(h => h.seo), borderColor: '#2f4f8f', backgroundColor: 'rgba(47,79,143,.08)', tension: .3, fill: true, pointRadius: 5, borderDash: [5,4] }
     ]
   },
   options: {
