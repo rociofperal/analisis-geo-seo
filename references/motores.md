@@ -30,37 +30,78 @@ Empieza siempre con `tabs_context_mcp` para tener el `tabId`.
 
 El más barato de los tres: acepta la consulta por URL y no exige sesión.
 
-### Lanzar y esperar
+### Lanzar
 
-Navega a `https://www.perplexity.ai/search?q=<consulta url-encoded>`. Con `browser_batch` se encadenan **dos consultas completas por llamada**, que es el punto dulce: más de dos y el batch se vuelve frágil.
-
-```
-navigate (consulta 1) → wait 10 → wait 10 → get_page_text
-navigate (consulta 2) → wait 10 → wait 10 → get_page_text
-```
-
-Unos 20 segundos bastan para una respuesta corta. **Si el texto sale cortado a mitad de una tabla o de una lista, no es un fallo: seguía redactando.** Espera 10 s más y vuelve a leer la misma página. Las respuestas con tabla comparativa son las que más tardan y son justo las más informativas.
-
-Alternativa a `navigate` cuando la consulta lleva acentos y comillas, desde una página de Perplexity ya cargada:
+Dos formas. La segunda es preferible cuando la consulta tiene acentos, comillas o interrogaciones, porque evita codificar a mano:
 
 ```js
+// desde una página de perplexity ya cargada
 location.href = 'https://www.perplexity.ai/search?q=' + encodeURIComponent('¿Quién es …?');
 'go'
 ```
 
 Devuelve `'go'` al final para que la llamada no falle al descargarse la página.
 
-### Leer
+Si vienes de otro dominio, primero `navigate` a la URL de búsqueda ya codificada, y a partir de ahí usa el truco de `location.href` para el resto de la batería.
 
-`get_page_text` funciona bien para el **cuerpo de la respuesta**, e incluye las etiquetas de cita inline (el nombre corto del dominio bajo cada párrafo), que ya sirven para saber si la web propia alimenta la respuesta.
+### Esperar
 
-Para la **lista completa de fuentes** hace falta abrirla: `find` con «botón N fuentes», `left_click` por `ref`, esperar 2-3 s y volver a leer. Si necesitas los dominios exactos, usa `document.body.innerText` en lugar de `get_page_text`, porque el panel de fuentes no siempre entra en el texto extraído.
+Unos **20 segundos** antes de leer. Con `browser_batch` se encadena en una sola llamada:
+
+```
+javascript_tool (lanzar) → computer wait 10 → computer wait 10 → javascript_tool (leer)
+```
+
+Puedes meter **dos consultas completas en el mismo `browser_batch`** y así reducir a la mitad los viajes de ida y vuelta. Más de dos y el batch se vuelve frágil.
+
+Para saber si ha terminado de generar, **no busques el rótulo «En curso»**: depende del idioma de la interfaz. Mide el tamaño del texto dos veces con unos segundos de diferencia — si ha crecido, sigue escribiendo:
+
+```js
+const a = document.body.innerText.length;
+await new Promise(r => setTimeout(r, 4000));
+const b = document.body.innerText.length;
+JSON.stringify({ generando: b > a, largo: b })
+```
+
+Las respuestas con **tabla comparativa** son las que más tardan, y son justo las más informativas porque comparan al sujeto con sus competidores fila a fila. Si el texto sale cortado a media tabla, no es un fallo: seguía redactando. Espera y vuelve a leer.
+
+### Leer — sin depender del idioma
+
+**Usa `document.body.innerText`, no `get_page_text`.** El panel de fuentes de Perplexity no aparece en el texto que extrae `get_page_text`, y las fuentes son la mitad del dato que buscas.
+
+La tentación es anclarse a un rótulo de la interfaz para localizar dónde empieza la respuesta. **No lo hagas**: «Descargar Comet», «Buscando en la web» o «Fuentes» solo existen con la interfaz en español, y la extracción devolvería vacío para cualquier otro usuario.
+
+El ancla buena es **el texto de la consulta que acabas de lanzar**, porque lo has escrito tú y por tanto lo conoces. Aparece dos veces en la página —en la lista de sesiones y en la burbuja de la pregunta— y la respuesta empieza justo después de la segunda:
+
+```js
+const CONSULTA = '…aquí el texto exacto que lanzaste…';
+const DOMINIO  = 'ejemplo.com';
+const MARCA    = 'Nombre del sujeto';
+
+const t = document.body.innerText;
+const ancla = CONSULTA.slice(0, 60);              // un trozo basta y evita truncados
+const i = t.lastIndexOf(ancla);                   // la última ocurrencia es la burbuja
+const desde = i >= 0 ? i + ancla.length : 0;      // si no aparece, leemos desde el principio
+
+JSON.stringify({
+  ancladoOk: i >= 0,                              // si sale false, revisa la consulta
+  cita: new RegExp(DOMINIO.replace('.', '\\.'), 'i').test(t),
+  menciones: t.split('\n').filter(l => new RegExp(MARCA, 'i').test(l)).slice(0, 8),
+  respuesta: t.slice(desde, desde + 2000)
+})
+```
+
+Si `ancladoOk` sale `false`, casi siempre es que la consulta llevaba un salto de línea o un carácter que la interfaz ha normalizado. Prueba con un trozo más corto y sin signos de puntuación.
+
+Mantén el recorte en **unos 2.000 caracteres**: si pides mucho más, la salida se trunca y pierdes los campos que van después de `respuesta` en el JSON. Pon los flags **antes** del texto largo, por ese mismo motivo.
+
+Para ver la lista de fuentes, localiza el botón con **`find`** describiéndolo en lenguaje natural —«sources button», «botón de fuentes»— en lugar de buscar su texto exacto: `find` es semántico y funciona con la interfaz en cualquier idioma. Después haz `left_click`, espera 2-3 s y vuelve a leer `innerText`; las fuentes aparecen entonces como líneas de texto.
 
 ### Trampas de Perplexity
 
-- **`javascript_tool` puede responder `[BLOCKED: Cookie/query string data]`.** Salta con scripts largos, con los que devuelven objetos grandes y con los que exponen URLs completas o cadenas de consulta. Solución: trocea en varias llamadas que devuelvan cadenas cortas, y no devuelvas nunca `href` completos — extrae `pathname` o solo un booleano de si el dominio aparece.
-- `document.querySelectorAll('a[href^="http"]')` devuelve vacío en las páginas de resultados. No intentes sacar las fuentes por el DOM de enlaces.
-- Aparecerá un aviso de cookies y otro de «Inicia sesión». Cierra el de cookies con **«Solo las necesarias»** (la opción más respetuosa con la privacidad) y el de sesión con su «×». Una vez cerrados no vuelven durante la sesión.
+- **`javascript_tool` puede responder `[BLOCKED: Cookie/query string data]`.** Ocurre cuando el código devuelve URLs completas o cadenas de consulta, y también con scripts largos que devuelven objetos grandes. Solución: no devuelvas nunca `href` completos —extrae `pathname`, o solo un booleano de si el dominio aparece— y trocea la extracción en varias llamadas que devuelvan cadenas cortas.
+- `document.querySelectorAll('a[href^="http"]')` devuelve vacío en las páginas de resultados. No intentes sacar las fuentes por el DOM de enlaces: usa `innerText`.
+- Aparecerá un aviso de cookies y otro de «inicia sesión». Localízalos con `find` y cierra el de cookies eligiendo **solo las necesarias** (la opción más respetuosa con la privacidad) y el de sesión con su «×». Una vez cerrados no vuelven durante la sesión.
 
 ## ChatGPT
 
@@ -69,34 +110,36 @@ Requiere sesión iniciada. Comprueba con una captura antes de escribir.
 ### Ciclo por consulta
 
 1. `navigate` a `https://chatgpt.com/` — **cada vez**, para abrir hilo nuevo. Esperar ~6 s.
-2. Clic en el campo de texto, `type` la consulta, esperar 2 s, `key Return`.
-3. Esperar **30-40 s**. Es bastante más lento que Perplexity cuando busca en la web.
+2. Localiza el cuadro de texto con `find`, haz `left_click` sobre su `ref`, `type` la consulta, esperar 2 s, `key Return`.
+3. Esperar **30-50 s**. Es bastante más lento que Perplexity cuando busca en la web.
 4. Leer (ver abajo).
 
-Termina siempre la consulta con «**Busca en la web.**» para forzar la búsqueda. Sin eso contesta de memoria y el resultado no mide indexación, que es lo único que interesa.
+Termina la consulta con una instrucción explícita de buscar en la web —«Busca en la web.», «Search the web.»— en el idioma de la consulta. Sin eso contesta de memoria y el resultado no mide indexación.
 
 ### Leer: el orden que funciona
 
-`get_page_text` **pierde la prosa** y devuelve solo los chips de fuentes («Rocío F. Peral - Portfolio», «LinkedIn», …). Es un fallo conocido y constante, no intermitente. Orden de intentos:
+`get_page_text` **pierde la prosa** y devuelve solo los chips de fuentes. Es un fallo conocido y constante, no intermitente. Orden de intentos:
 
 1. JS sobre el último mensaje del asistente:
    ```js
    const e = [...document.querySelectorAll('[data-message-author-role="assistant"]')];
    e.length ? e[e.length - 1].innerText.slice(0, 3500) : 'NO ASSISTANT MSG'
    ```
-2. Si eso también devuelve solo los chips —pasa cuando la respuesta trae tarjetas de fuentes—, **haz captura y léela**. Desplázate hacia arriba para ver el principio: la vista queda anclada al final.
+2. Si eso también devuelve solo los chips —pasa cuando la respuesta trae tarjetas de fuentes—, **lee con capturas** y desplázate hacia arriba para ver el principio: la vista queda anclada al final.
 
 ### Qué se extrae de ChatGPT
 
-Los chips de cita llevan **el nombre de la fuente, no el dominio**. Una web personal aparece como el título de su `<title>` («Rocío F. Peral - Portfolio»). Cuéntalos: el número de citas a la web propia frente al total es la métrica de citación de este motor, y es la más sensible de las tres.
+Los chips de cita llevan **el nombre de la fuente, no el dominio**. Una web personal aparece como el título de su `<title>` («Nombre Apellido - Portfolio»). Cuéntalos: el número de citas a la web propia frente al total es la métrica de citación de este motor, y es la más sensible de las tres.
 
 Que cite solo LinkedIn y no la web del sujeto es un diagnóstico en sí mismo: significa que su índice (Bing) no tiene el sitio, y la acción es dar de alta el sitemap en Bing Webmaster Tools, no tocar la web.
 
-### El tope del plan gratuito
+### Trampas de ChatGPT
 
-**Si la cuenta es gratuita, la búsqueda web tiene límite diario.** Al agotarse, ChatGPT no avisa: sigue contestando, pero de memoria. Es el peor fallo posible porque parece un dato válido y es un falso negativo.
+**Los acentos.** El editor a veces se come los caracteres no ASCII al escribir por teclado y deja solo los acentos sueltos («¿éíáíñá»). Si ves eso en la captura, borra y reescribe la consulta sin acentos: los motores son insensibles a ellos. Anótalo como salvedad en la transcripción, para que quede constancia de que el texto lanzado no fue exactamente el de la batería.
 
-Detección: la respuesta deja de mostrar chips de fuentes y de decir «Buscando en la web». En cuanto lo veas, **marca esa consulta y todas las siguientes como no ejecutadas por límite de plan**. No las cuentes como ausencias.
+**El tope del plan gratuito.** Si la cuenta es gratuita, la búsqueda web tiene límite diario. Al agotarse, ChatGPT no avisa: sigue contestando, pero de memoria. Es el peor fallo posible porque parece un dato válido y es un falso negativo.
+
+Detección: la respuesta deja de mostrar chips de fuentes y de indicar que está buscando. En cuanto lo veas, **marca esa consulta y todas las siguientes como `no_ejecutada` por límite de plan**. No las cuentes como ausencias.
 
 Si el sujeto va a hacer seguimiento semanal en serio, avísale de que una cuenta de pago elimina esta restricción — es la diferencia entre 15 datos y 4.
 
@@ -107,18 +150,18 @@ Requiere sesión iniciada. Es el más quisquilloso de los tres.
 ### Ciclo por consulta
 
 1. `navigate` a `https://gemini.google.com/app` — **cada vez**. Esperar ~8 s. Cierra el aviso de ajustes si aparece.
-2. Clic en el cuadro de texto y `type`. Si el clic por coordenadas no enfoca, usa `find` con «prompt input textbox» y haz `left_click` por `ref`.
+2. Usa `find` para localizar el cuadro de texto («prompt input textbox»), haz `left_click` con el `ref`, y solo entonces `type`. Verifica con una captura que el texto ha entrado antes de enviar.
 3. **Enviar**: ver abajo, es la trampa principal.
 4. Esperar **30-40 s**. Aquí `get_page_text` sí funciona bien y devuelve la respuesta completa.
 
 ### La trampa del botón de enviar
 
-`Return` no siempre envía, y **el botón de enviar está pegado al selector de modelo**: un clic por coordenadas abre el desplegable de modelos («3.5 Flash-Lite / 3.6 Flash / 3.1 Pro») en lugar de mandar el mensaje. Si insistes por coordenadas, lo vuelve a abrir.
+`Return` no siempre envía, y **el botón de enviar está pegado al selector de modelo**: un clic por coordenadas abre el desplegable de modelos en lugar de mandar el mensaje. Si insistes por coordenadas, lo vuelve a abrir.
 
 Secuencia que funciona:
 
 1. Si se ha abierto el desplegable, **haz clic en una zona vacía de la página** para cerrarlo. `Escape` no siempre lo cierra.
-2. `find` con «botón Enviar mensaje».
+2. `find` con «botón Enviar mensaje» / «send message button».
 3. `left_click` por el `ref` devuelto.
 4. Captura para confirmar que el mensaje se ha enviado antes de empezar a esperar.
 
@@ -130,7 +173,7 @@ El botón solo existe cuando hay texto en el cuadro, así que `find` no lo encon
 
 Lo que sí aporta, y es material accionable que los otros dos no dan:
 
-- **La taxonomía del mercado**: con qué etiquetas se busca ese perfil («Growth Architect», «Technical Marketer», «CMO Técnico»). Si ninguna aparece en la web ni en LinkedIn del sujeto, ahí hay una acción de un minuto.
+- **La taxonomía del mercado**: con qué etiquetas se busca ese perfil («Growth Architect», «Technical Marketer», «CMO Técnico»). Si ninguna aparece en la web ni en el LinkedIn del sujeto, ahí hay una acción de un minuto.
 - **Cadenas de búsqueda booleanas** que propone para encontrar el perfil. Son literalmente las palabras que el mercado usaría.
 - **Directorios y comunidades concretas** donde buscaría.
 - **La conducta que hace visible al perfil** («publican contenido compartiendo las aplicaciones que han desarrollado»), que suele describir exactamente lo que el sujeto no está haciendo.
@@ -157,4 +200,4 @@ competidores [], frases_evidencia [], reservas [], cita_literal, fuentes_n
 
 `reservas` recoge las coletillas del tipo «conviene validar referencias independientes» o «no he podido verificar X». Un sujeto puede estar recomendado y perder igualmente el encargo por una de estas frases, y son la señal más temprana de que el cuello de botella ha dejado de ser la web.
 
-`no_ejecutada` no es un cero. Va siempre con el motivo en `notas`.
+`no_ejecutada` no es un cero. Va siempre con el motivo en `notas`, y **se resta del total de ese motor** para que la tasa de la semana siga siendo honesta.

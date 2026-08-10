@@ -47,10 +47,10 @@ Una batería de 15 solo funciona si las 15 pueden mover algo. Descarta:
 
 ## Calibración
 
-- **Idioma y mercado del cliente.** Si el sujeto vende en España, las consultas van en español y dicen «en España». Los motores dan respuestas muy distintas según el idioma.
+- **Idioma y mercado del cliente.** Las consultas van en el idioma de **quien busca proveedor**, no en el del usuario. Si el sujeto vende en España, en español y diciendo «en España»; si vende en Alemania, en alemán aunque tú y el cliente habléis español. Los motores responden cosas muy distintas según el idioma. Detalle completo en `idiomas.md`.
 - **Incluye competidores como control.** Si tras varias semanas ningún nombre aparece en un bloque, probablemente la consulta está mal calibrada, no es que el mercado esté vacío. Si aparecen competidores y el sujeto no, el diagnóstico es sólido.
 - **Mezcla dificultad.** Alguna consulta debe ser ganable pronto (nicho muy específico, poca competencia) y alguna debe ser difícil (categoría con empresas grandes posicionadas). Una batería toda difícil no mide progreso; toda fácil no mide nada.
-- **Ancla las consultas de producto al nombre del producto y a su categoría**, no solo al nombre. Nadie busca «Voltio»: buscan «PWA de entrenamiento de fuerza con IA».
+- **Ancla las consultas de producto al nombre del producto y a su categoría**, no solo al nombre. Nadie busca un producto por su marca si no la conoce: busca la categoría («PWA de entrenamiento de fuerza con IA», «ERP para centros de formación»). La consulta tiene que sonar a alguien que no sabe que existes.
 - **Deja al menos un nicho vacío en la batería** si lo detectas: una consulta donde el motor admite que no conoce a nadie es la victoria más barata que existe y conviene vigilar cuándo se ocupa, sea por el sujeto o por un competidor.
 
 ## Congelar la batería
