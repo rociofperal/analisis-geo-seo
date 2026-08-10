@@ -89,6 +89,8 @@ Lee `references/bateria-consultas.md` para construirla y `references/motores.md`
 
 Estructura: **15 consultas en 5 bloques** (A entidad, B–E un nicho cada uno, 3 por bloque), lanzadas **íntegras en los tres motores** — Perplexity, ChatGPT y Gemini. Son 45 ejecuciones. Las consultas se redactan como las escribiría un cliente que busca proveedor, no como las escribiría el sujeto describiéndose. Esa diferencia es la que hace que el test mida demanda real.
 
+**Si el mercado del sujeto no es hispanohablante, lee antes `references/idiomas.md`.** La batería va siempre en el idioma de quien busca proveedor, no en el del usuario ni en el tuyo, y hay que evitar anclar la lectura de las respuestas a rótulos de la interfaz — es lo que rompe la extracción cuando los motores están en otro idioma.
+
 Tres reglas que no se negocian:
 
 1. **Las mismas 15 preguntas, literales, en los tres motores.** Sin reformular ni adaptar por motor. Mismo denominador = series comparables entre sí.
