@@ -18,7 +18,7 @@ El problema es que no hay Search Console para esto. No sabes si apareces, no sab
 
 ## Qué hace
 
-**Línea base.** Entrevista breve sobre nichos y alias, auditoría técnica de la web, huella digital externa (LinkedIn, GitHub, menciones de terceros) y una batería de **20 consultas en Perplexity más 2 contrastes** en ChatGPT y Gemini. Devuelve un panel HTML, la transcripción literal de todas las respuestas y un plan de acción priorizado.
+**Línea base.** Entrevista breve sobre nichos y alias, auditoría técnica de la web, huella digital externa (LinkedIn, GitHub, menciones de terceros) y una batería de **15 consultas lanzadas íntegras en los tres motores** — 45 ejecuciones. Devuelve un panel HTML, la transcripción literal de todas las respuestas y un plan de acción priorizado.
 
 ![Tabla de resultados por consulta](docs/panel2.PNG)
 
@@ -27,6 +27,12 @@ El problema es que no hay Search Console para esto. No sabes si apareces, no sab
 ![Evolución semanal](docs/panel6.PNG)
 
 **Informe general acumulado.** Cruza qué acciones implementaste con qué se movió después, señala lo que lleva semanas bloqueado y reordena las prioridades.
+
+## Las mismas preguntas en los tres motores
+
+Perplexity, ChatGPT y Gemini usan índices distintos. Que uno te cite no implica nada sobre los demás, y la acción para arreglar cada uno es diferente: dar de alta el sitemap en Bing mueve ChatGPT y no toca a Perplexity.
+
+Por eso la batería va **entera a los tres** y el panel nunca los promedia. Un 33 % agregado puede ser 100/0/0, y esos dos casos piden cosas opuestas. Tres tarjetas, tres series en el gráfico, tres diagnósticos.
 
 ## Tres estados, no dos
 
@@ -37,6 +43,7 @@ La diferencia que hace útil el análisis:
 | **Recomendado** | El motor te nombra como respuesta. Se anota la posición frente a los competidores. |
 | **Citado pero no nombrado** | Tu web está entre las fuentes y alimenta la respuesta, pero el motor se queda con la categoría genérica sin recomendar a nadie. |
 | **Ausente** | Ni nombrado ni citado. |
+| **No ejecutada** | No se pudo lanzar: sin sesión, cuota de búsqueda agotada, fallo de interfaz. **No cuenta como ausencia** y se resta del total de ese motor. |
 
 Ese estado intermedio es el más informativo. Significa que la autoridad ya existe y lo que falta es que el contenido sea **atribuible**: un método con nombre, fases y entregable, en lugar de una descripción de capacidades. Con un simple sí/no se perdería justo la palanca que hay que mover.
 
@@ -58,7 +65,9 @@ De ahí sale el plan de acción, ordenado por impacto frente a esfuerzo y no por
 
 **Citado pero no recomendado.** Tu web aparece entre las fuentes y alimenta la respuesta, pero el motor se queda con la categoría genérica. Significa que la autoridad ya está y lo que falta es atribuibilidad: un método con nombre y plazo en lugar de una lista de capacidades.
 
-**Un motor te ve y otro no.** Perplexity, ChatGPT y Gemini usan índices distintos. Que uno te cite no implica nada sobre los demás, y el diagnóstico —y la acción— son diferentes en cada caso.
+**Recomendado con reservas.** El motor te nombra y a continuación añade «conviene validar referencias independientes» o «no he podido verificar X». Es la señal de que el cuello de botella ya no es tu web: es que solo hablas tú de ti. La skill registra esas coletillas aparte porque marcan el cambio de fase del trabajo.
+
+**Un motor te ve y otro no.** El caso más común al principio, y el que más se malinterpreta si se mira una cifra agregada.
 
 ## Instalación
 
@@ -83,7 +92,7 @@ Después basta con pedirlo en lenguaje natural:
 ├── references/
 │   ├── auditoria-tecnica.md        # qué medir y la rúbrica de puntuación /100
 │   ├── cms.md                      # WordPress, Webflow, Shopify: dónde cambia todo
-│   ├── bateria-consultas.md        # cómo construir las 20+2 consultas
+│   ├── bateria-consultas.md        # cómo construir las 15 consultas (5 bloques × 3)
 │   ├── idiomas.md                  # qué cambia al analizar otros mercados
 │   ├── motores.md                  # mecánica de navegador y sus trampas
 │   ├── estado-json.md              # esquema del histórico
@@ -97,13 +106,15 @@ Después basta con pedirlo en lenguaje natural:
     └── plantilla-panel.html        # panel autocontenido (Chart.js por CDN)
 ```
 
-El fichero que más rinde es `references/motores.md`: recoge las trampas de automatizar los tres motores —esperas, marcadores estables para leer las respuestas, por qué el panel de fuentes de Perplexity no aparece en el texto extraído, cómo ChatGPT y Gemini se resisten a que les escriban por teclado— que solo se descubren ejecutando la batería de verdad unas cuantas veces.
+El fichero que más rinde es `references/motores.md`: recoge las trampas de automatizar los tres motores —esperas, cómo leer las respuestas sin anclarse a rótulos que dependen del idioma, por qué el panel de fuentes de Perplexity no aparece en el texto extraído, cómo ChatGPT se come los acentos y por qué el botón de enviar de Gemini abre el selector de modelo— que solo se descubren ejecutando la batería de verdad unas cuantas veces.
 
 ## Requisitos
 
 - Claude con acceso a un navegador (extensión Claude in Chrome o equivalente) para lanzar las consultas y auditar el DOM renderizado.
-- Los contrastes en ChatGPT y Gemini requieren **sesión iniciada** en el navegador. Perplexity no la necesita.
+- ChatGPT y Gemini requieren **sesión iniciada** en el navegador: sin ella se pierden 30 de las 45 consultas. Perplexity no la necesita.
+- Si la cuenta de ChatGPT es **gratuita**, su búsqueda web tiene tope diario y puede agotarse a mitad de la batería. La skill lo detecta y marca esas consultas como no ejecutadas en lugar de contarlas como ausencias.
 - Python 3.8+ para los dos scripts de análisis.
+- La batería completa lleva unos 50-60 minutos: Perplexity se automatiza por URL, pero ChatGPT y Gemini obligan a escribir y esperar.
 
 ## Alcance y limitaciones
 

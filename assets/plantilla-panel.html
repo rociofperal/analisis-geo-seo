@@ -57,6 +57,8 @@ ul{margin:6px 0 0;padding-left:18px} li{margin-bottom:5px}
 code{background:#f2f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
 .chartbox{height:230px}
 .grupo td{background:#f7f5f2;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);padding:8px 10px}
+.det td{padding-top:0;border-bottom:1px solid var(--line);font-size:13px;color:var(--mut)}
+.q td{border-bottom:none;padding-bottom:4px}
 </style>
 </head>
 <body>
@@ -74,7 +76,9 @@ code{background:#f2f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
 
 <!-- Cada tarjeta con su valor anterior en la nota: un número sin delta no informa. -->
 <div class="scores">
-  <div class="score v-amb"><div class="lab">Visibilidad GEO</div><div class="val">{{GEO}} / {{GEO_TOTAL}}</div><div class="note">{{GEO_NOTA}}</div></div>
+  <div class="score v-amb"><div class="lab">Perplexity</div><div class="val">{{PPX}} / {{PPX_TOTAL}}</div><div class="note">{{PPX_NOTA}}</div></div>
+  <div class="score v-amb"><div class="lab">ChatGPT</div><div class="val">{{GPT}} / {{GPT_TOTAL}}</div><div class="note">{{GPT_NOTA}}</div></div>
+  <div class="score v-amb"><div class="lab">Gemini</div><div class="val">{{GEM}} / {{GEM_TOTAL}}</div><div class="note">{{GEM_NOTA}}</div></div>
   <div class="score v-grn"><div class="lab">SEO técnico</div><div class="val">{{SEO}} / 100</div><div class="note">{{SEO_NOTA}}</div></div>
   <div class="score v-grn"><div class="lab">Páginas indexables</div><div class="val">{{URLS}}</div><div class="note">{{URLS_NOTA}}</div></div>
   <div class="score v-grn"><div class="lab">Rendimiento</div><div class="val">{{PERF}}</div><div class="note">{{PERF_NOTA}}</div></div>
@@ -85,20 +89,25 @@ code{background:#f2f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
 <div class="win"><b>✓ Resuelto: {{TITULO_LOGRO}}</b><br>{{TEXTO_LOGRO}}</div>
 <div class="alert"><b>⚠ El problema número 1 esta semana: {{TITULO_BLOQUEANTE}}</b><br>{{TEXTO_BLOQUEANTE}}</div>
 
-<h2><span class="n">1</span> Resultados GEO — las {{N_CONSULTAS}} consultas ejecutadas</h2>
+<h2><span class="n">1</span> Resultados GEO — {{N_PREGUNTAS}} preguntas x 3 motores</h2>
 <div class="card">
 <p style="margin:0 0 14px;font-size:13.5px;color:var(--mut)">{{NOTA_METODO}}</p>
+<!-- MATRIZ: una fila por pregunta y una columna por motor. Con 45 resultados
+     una tabla plana es ilegible; asi ademas se ve de un vistazo el patron:
+     fila verde en un motor y roja en los otros dos = problema de indice;
+     fila entera roja = problema de contenido. -->
 <table>
-<thead><tr><th style="width:24%">Consulta</th><th style="width:11%">Motor</th><th style="width:11%">¿Apareces?</th><th>Qué respondió</th></tr></thead>
+<thead><tr><th style="width:40%">Consulta</th><th style="width:14%">Perplexity</th><th style="width:14%">ChatGPT</th><th style="width:14%">Gemini</th></tr></thead>
 <tbody>
-<tr class="grupo"><td colspan="4">A · Reconocimiento de entidad — <span style="color:var(--grn)">{{A_ACIERTOS}}</span></td></tr>
-<tr>
+<tr class="grupo"><td colspan="4">A · Reconocimiento de entidad — Perplexity {{A_PPX}} · ChatGPT {{A_GPT}} · Gemini {{A_GEM}}</td></tr>
+<tr class="q">
   <td>{{CONSULTA}}</td>
-  <td>{{MOTOR}}</td>
   <!-- p-ok recomendado · p-wr citado pero no nombrado · p-ko ausente -->
-  <td><span class="pill p-ok">Sí · correcta</span></td>
-  <td>{{QUE_RESPONDIO}}<div class="quote">«{{CITA_LITERAL}}»</div></td>
+  <td><span class="pill p-ok">nº 1</span></td>
+  <td><span class="pill p-wr">Citada</span></td>
+  <td><span class="pill p-ko">No</span></td>
 </tr>
+<tr class="det"><td colspan="4">{{QUE_RESPONDIO}}<div class="quote">«{{CITA_LITERAL}}»</div></td></tr>
 </tbody>
 </table>
 </div>
@@ -176,16 +185,22 @@ code{background:#f2f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
 <script>
 // AÑADIR un objeto por medición. No borrar los anteriores: el histórico es
 // la razón de existir del seguimiento.
+// `a` = apariciones (estado "recomendado"); `t` = consultas realmente lanzadas
+// en ese motor esa semana. Guardar `t` por motor permite representar con
+// honestidad una semana en la que un motor agoto su cuota de busqueda.
 const HIST = [
-  { fecha: "{{ETIQUETA}}", geo: 0, geoTotal: 22, seo: 0 }
+  { fecha: "{{ETIQUETA}}", seo: 0, ppx:{a:0,t:15}, gpt:{a:0,t:15}, gem:{a:0,t:15} }
 ];
+const pct = m => HIST.map(h => (h[m] && h[m].t) ? Math.round(h[m].a / h[m].t * 100) : 0);
 new Chart(document.getElementById('hist'), {
   type: 'line',
   data: {
     labels: HIST.map(h => h.fecha),
     datasets: [
-      { label: 'Visibilidad GEO (% de consultas en las que apareces)', data: HIST.map(h => h.geoTotal ? Math.round(h.geo / h.geoTotal * 100) : 0), borderColor: '#c0392b', backgroundColor: 'rgba(192,57,43,.08)', tension: .3, fill: true, pointRadius: 5 },
-      { label: 'SEO técnico (0-100)', data: HIST.map(h => h.seo), borderColor: '#2f4f8f', backgroundColor: 'rgba(47,79,143,.08)', tension: .3, fill: true, pointRadius: 5 }
+      { label: 'Perplexity (% de consultas en las que apareces)', data: pct('ppx'), borderColor: '#c0392b', tension: .3, fill: false, pointRadius: 5 },
+      { label: 'ChatGPT (%)', data: pct('gpt'), borderColor: '#1e7a4f', tension: .3, fill: false, pointRadius: 5 },
+      { label: 'Gemini (%)', data: pct('gem'), borderColor: '#b8860b', tension: .3, fill: false, pointRadius: 5 },
+      { label: 'SEO técnico (0-100)', data: HIST.map(h => h.seo), borderColor: '#2f4f8f', backgroundColor: 'rgba(47,79,143,.08)', tension: .3, fill: true, pointRadius: 5, borderDash: [5,4] }
     ]
   },
   options: {

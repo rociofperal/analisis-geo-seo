@@ -9,7 +9,7 @@ description: Analiza y monitoriza la visibilidad de una marca, empresa o persona
 
 Un buscador clásico devuelve diez enlaces; un motor generativo devuelve **una** respuesta con dos o tres nombres. O estás en esa respuesta o no existes. Esta skill mide si el sujeto aparece, por qué no aparece, y qué evidencia concreta piden los motores para incluirlo — y lo repite cada semana para que la mejora sea medible en lugar de una sensación.
 
-La parte más valiosa del análisis no son las puntuaciones: son las **frases literales** en las que un motor explica qué está buscando y no encuentra («no aparecen perfiles técnicos públicos: GitHub, Stack Overflow, ponencias…»). Esas frases son un plan de trabajo dictado por el propio motor. Recógelas siempre.
+La parte más valiosa del análisis no son las puntuaciones: son las **frases literales** en las que un motor explica qué está buscando y no encuentra («no aparecen perfiles técnicos públicos: GitHub, Stack Overflow, ponencias…», «conviene validar referencias independientes antes de contratar»). Esas frases son un plan de trabajo dictado por el propio motor. Recógelas siempre.
 
 ## Los tres modos
 
@@ -52,6 +52,8 @@ Pregunta en una sola tanda, con `AskUserQuestion` si está disponible:
 
 Sobre las colisiones: comprueba siempre si el nombre está ocupado por otra persona más indexada. Es el fallo más común y el más caro, porque ninguna mejora técnica funciona mientras el motor crea que el sujeto es otra persona. Se detecta con la consulta de entidad del bloque A y con una búsqueda del nombre a secas.
 
+Advierte también, antes de empezar, de las **dos condiciones de ejecución** que limitan la batería: hace falta sesión iniciada en ChatGPT y en Gemini, y si el plan de ChatGPT es gratuito su búsqueda web tiene tope diario. Ver Fase 3.
+
 ## Fase 1 · Auditoría técnica de la web
 
 Lee `references/auditoria-tecnica.md`. Contiene el script de extracción y la rúbrica de puntuación sobre 100.
@@ -64,6 +66,7 @@ Resumen de lo que se mide, y por qué cada cosa importa para un motor generativo
 - **`robots.txt` con permiso explícito a los bots de IA** — GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, anthropic-ai, PerplexityBot, Perplexity-User, Google-Extended, Applebot-Extended, CCBot. Un `Allow: /` genérico no basta: algunos operadores respetan solo la directiva nominal.
 - **JSON-LD con `Person` u `Organization` + `sameAs`** — `sameAs` es el mecanismo por el que un motor une la web con LinkedIn y GitHub y decide que son la misma entidad. Sin él, cada fuente es una isla.
 - **Profundidad de contenido y número de URLs indexables** — un motor no puede recomendar lo que no tiene URL. Un proyecto nombrado dentro de una página compartida casi nunca gana una consulta de producto; necesita página propia. Cuenta URLs **útiles**: en WordPress el sitemap incluye archivos de categoría, etiqueta, autor y fecha que inflan la cifra sin aportar contenido.
+- **`<lastmod>` en el sitemap** — sin él, un buscador no tiene forma de saber que una página que rastreó cuando era mala ha cambiado. Es la causa más habitual de URLs atascadas en «descubierta pero no rastreada» durante semanas después de rehacer un sitio.
 - **Metadatos únicos por página, un solo H1, canonical correcto** — higiene. Bajo impacto individual, pero es lo que resta.
 - **Rendimiento y SSR** — si el contenido solo existe tras ejecutar JavaScript, buena parte de los rastreadores no lo ve.
 
@@ -75,19 +78,28 @@ La web propia es una sola fuente, y los motores desconfían de las autodescripci
 
 - Búsquedas del nombre, del dominio y del nombre junto a cada nicho.
 - **LinkedIn**: ¿existe, está poblado, y el **nombre visible coincide exactamente** con el nombre por el que se busca? Un perfil que se llama «Ana G.» no es vinculable con «Ana García Pérez». Este detalle bloquea motores enteros y se arregla en dos minutos.
-- **GitHub** si el sujeto es técnico: existencia, actividad y bio. Varios motores lo nombran explícitamente como criterio de admisión.
+- **GitHub** si el sujeto es técnico. No basta con que el perfil exista: mide **repos, estrellas y seguidores** con la API pública (`api.github.com/users/<usuario>`). Un perfil con bio impecable y cero repos no acredita nada, y varios motores nombran GitHub explícitamente como criterio de admisión.
 - **Menciones de terceros**: publicaciones, rankings, directorios, foros del sector. Una ficha en un ranking ajeno pesa más que diez páginas propias.
 - **Productos**: ¿tienen rastro fuera de la web del autor?
+- **Índice de búsqueda**, si hay acceso a Google Search Console o Bing Webmaster Tools: URLs realmente indexadas y backlinks. Solo lectura — no envíes URLs ni pidas indexación sin permiso explícito del usuario.
 
 ## Fase 3 · La batería de consultas
 
 Lee `references/bateria-consultas.md` para construirla y `references/motores.md` para la mecánica de navegador, que tiene bastantes trampas.
 
-Estructura: **20 consultas en 5 bloques** (A entidad, B–E un nicho cada uno) más **2 contrastes** en otros motores. Las consultas se redactan como las escribiría un cliente que busca proveedor, no como las escribiría el sujeto describiéndose. Esa diferencia es la que hace que el test mida demanda real.
+Estructura: **15 consultas en 5 bloques** (A entidad, B–E un nicho cada uno, 3 por bloque), lanzadas **íntegras en los tres motores** — Perplexity, ChatGPT y Gemini. Son 45 ejecuciones. Las consultas se redactan como las escribiría un cliente que busca proveedor, no como las escribiría el sujeto describiéndose. Esa diferencia es la que hace que el test mida demanda real.
 
 **Si el mercado del sujeto no es hispanohablante, lee antes `references/idiomas.md`.** La batería va siempre en el idioma de quien busca proveedor, no en el del usuario ni en el tuyo, y hay que evitar anclar la lectura de las respuestas a rótulos de la interfaz — es lo que rompe la extracción cuando los motores están en otro idioma.
 
+Tres reglas que no se negocian:
+
+1. **Las mismas 15 preguntas, literales, en los tres motores.** Sin reformular ni adaptar por motor. Mismo denominador = series comparables entre sí.
+2. **Una conversación nueva por consulta** en ChatGPT y en Gemini. Si encadenas preguntas en el mismo hilo, el motor arrastra contexto y deja de medir descubrimiento espontáneo. Perplexity no tiene este problema porque cada búsqueda por URL es independiente.
+3. **Lo que no se pueda ejecutar se marca como no ejecutado**, nunca como ausencia. Un hueco explicado es dato; un cero falso envenena la serie.
+
 Guarda la batería en `estado.json` en la línea base y **reutilízala literalmente** cada semana. Cambiar la redacción rompe la comparabilidad, que es todo el valor del seguimiento.
+
+**Si el sujeto viene de una batería antigua** con otro reparto (por ejemplo 20 en un motor + contrastes sueltos), no mezcles los totales. Migra en un punto claro del histórico, deja anotada la fecha del cambio, y compara siempre **tasa por motor** en lugar del agregado. Un motor cuyo denominador pasa de 1 a 15 no está ampliando una muestra: está empezando una serie nueva, y hay que decirlo en el panel.
 
 ## Fase 4 · Clasificar cada resultado
 
@@ -99,6 +111,8 @@ Aquí es donde se gana o se pierde la utilidad del informe. Tres estados, no dos
 
 Mezclar los dos primeros oculta exactamente la palanca que hay que mover. Para cada consulta registra además: si la información es correcta o alucinada, qué competidores se recomiendan en su lugar, y cualquier frase donde el motor explique qué evidencia busca.
 
+**Anota también las reservas.** Un motor puede recomendar al sujeto y a la vez añadir «conviene validar referencias independientes» o «no he podido verificar X». Esa coletilla es la diferencia entre estar en la respuesta y ganar el encargo, y suele ser el diagnóstico dominante en cuanto la web deja de ser el cuello de botella.
+
 ## Fase 5 · Panel e histórico
 
 Lee `references/panel.md`. Usa `assets/plantilla-panel.html` como base: es autocontenido, sin dependencias más allá de Chart.js por CDN.
@@ -106,18 +120,18 @@ Lee `references/panel.md`. Usa `assets/plantilla-panel.html` como base: es autoc
 Secciones fijas del panel, en este orden:
 
 1. Cabecera con fecha y, desde la segunda semana, **«Cambios desde la semana anterior»** — lo primero que se lee, y lo único que se lee si hay prisa. Di qué mejoró, qué se resolvió y qué sigue igual. Un panel que no responde «¿vamos mejor?» en tres líneas ha fallado.
-2. Tarjetas de puntuación con el valor anterior al lado. Un número sin su delta no informa.
-3. Tabla de las 22 consultas con estado, motor y qué respondió.
+2. Tarjetas de puntuación, **una de visibilidad por motor** (`x / 15` en Perplexity, ChatGPT y Gemini) más puntuación técnica y URLs indexables. Cada una con su valor anterior al lado: un número sin su delta no informa. Nunca una sola cifra agregada de los tres motores: oculta que uno va al 40 % y otro a cero, que es justo el diagnóstico accionable.
+3. **Matriz de consultas**: 15 filas agrupadas por bloque × 3 columnas de motor, con el estado en cada celda y el detalle debajo. 45 filas sueltas son ilegibles; la matriz además hace visible de un vistazo el patrón por motor.
 4. **«Lo que los motores te han dicho que necesitan»** — las frases literales. Suele ser la sección más útil del panel.
 5. Auditoría técnica, marcando como resueltos los puntos corregidos desde la última vez. Ver el progreso sostiene el hábito.
 6. Huella digital.
 7. Plan de acción **reordenado** según lo que queda pendiente, retirando lo ya hecho.
 8. Quién ocupa hoy el sitio del sujeto.
-9. Gráfico de evolución.
+9. Gráfico de evolución: una serie por motor más la puntuación técnica.
 
 Al actualizar: conserva estructura y estilos, añade un objeto al array `HIST` sin borrar los anteriores, y actualiza cifras y tablas. En Cowork, escribe el HTML a fichero y pásalo a `update_artifact` con el id del sujeto para que el usuario tenga un panel vivo.
 
-Escribe también la transcripción literal de la semana. Para cada consulta: pregunta, motor, número de fuentes, veredicto, cita literal de la parte relevante y una línea de «Lectura» con la interpretación. Las citas literales son lo que permite discutir el diagnóstico en lugar de creérselo.
+Escribe también la transcripción literal de la semana, agrupada **por pregunta y dentro de ella por motor**, para poder leer en paralelo las tres respuestas a la misma consulta — que es donde se ve qué motor va por delante. Para cada una: pregunta, motor, número de fuentes, veredicto, cita literal de la parte relevante y una línea de «Lectura». Las citas literales son lo que permite discutir el diagnóstico en lugar de creérselo.
 
 ## Fase 6 · Programar el seguimiento
 
@@ -125,10 +139,13 @@ Al terminar la línea base, propón el calendario. Pregunta **día de la semana 
 
 Crea la tarea con la skill `schedule` o con `create_scheduled_task`. El texto de la tarea debe: invocar esta skill en modo seguimiento, nombrar el sujeto y la ruta de su `estado.json`, y recordar que en una ejecución programada no hay nadie a quien preguntar — hay que decidir de forma autónoma y dejar constancia de las decisiones en el informe.
 
-Advierte de dos cosas al proponerlo:
+Advierte de tres cosas al proponerlo:
 
-- Los contrastes en ChatGPT y Gemini necesitan **sesión iniciada en el navegador**. Si no la hay, esas dos consultas se marcan como no ejecutadas en lugar de inventarse.
-- El GEO se mueve en semanas; el SEO clásico en meses. Un seguimiento semanal es el ritmo adecuado para el primero, y para el segundo hay que mirar la tendencia de varias semanas, no el salto de una.
+- **ChatGPT y Gemini necesitan sesión iniciada** en el navegador. Sin ella se pierden 30 de las 45 consultas, así que la sesión hay que dejarla abierta. Lo que no se ejecute se marca como no ejecutado, nunca como ausencia.
+- **Si el plan de ChatGPT es gratuito**, su búsqueda web tiene tope. Puede agotarse a mitad de la batería y seguir respondiendo de memoria, que es peor que no responder porque parece un dato válido. Hay que detectarlo y marcarlo.
+- **El GEO se mueve en semanas; el SEO clásico en meses.** Un seguimiento semanal es el ritmo adecuado para el primero, y para el segundo hay que mirar la tendencia de varias semanas, no el salto de una.
+
+Calcula también el tiempo: la batería completa ronda los 50-60 minutos, porque Perplexity se automatiza por URL pero ChatGPT y Gemini exigen escribir y esperar. Si el presupuesto se agota, es mejor cerrar dos motores completos que dejar los tres a medias.
 
 ## Informe general acumulado
 
@@ -136,7 +153,7 @@ Lee `references/informe-general.md`. Se construye leyendo todo `estado.json`, no
 
 Debe responder cuatro preguntas y en este orden, porque es el orden en que le importan a quien decide:
 
-1. **¿Vamos mejor?** Tendencia de visibilidad y de puntuación técnica desde el inicio, con las cifras.
+1. **¿Vamos mejor?** Tendencia de visibilidad **por motor** y de puntuación técnica desde el inicio, con las cifras.
 2. **¿Qué hicimos y qué funcionó?** Cruza las acciones implementadas con los saltos de visibilidad de la semana siguiente. Aquí se distingue lo que mueve la aguja de lo que solo da trabajo. Sé honesto cuando la correlación no permita atribuir: «coincidió con» no es «causó».
 3. **¿Qué sigue bloqueado y por qué?** Consultas que llevan varias semanas ausentes. Si algo lleva un mes sin moverse, el diagnóstico anterior era incompleto: dilo y revísalo.
 4. **¿Qué toca ahora?** Plan priorizado por relación impacto/esfuerzo, con la evidencia que lo respalda.
@@ -148,10 +165,11 @@ Debe responder cuatro preguntas y en este orden, porque es el orden en que le im
 - **Una cita no es una recomendación.** Distinguirlo señala la palanca exacta: pasar de describir capacidades a ofrecer un método atribuible.
 - **Lo que se cita es lo específico y verificable.** «Auditoría de software» no se cita; «Método de rescate en 3 fases, diagnóstico en 72 h» sí. Un servicio sin nombre, plazo ni entregable es invisible.
 - **Las cifras hacen citable un caso.** Un caso de éxito sin número no compite con uno que dice «70 % menos de tiempo».
-- **La corroboración de terceros pesa más que la web propia.** Cuando un motor cita un ranking ajeno para recomendar a alguien, ese ranking es el objetivo, no más contenido propio.
+- **La corroboración de terceros pesa más que la web propia.** Cuando un motor cita un ranking ajeno para recomendar a alguien, ese ranking es el objetivo, no más contenido propio. Y cuando el motor recomienda *con reservas* —«valide referencias independientes»—, ya no falta contenido: falta que hable alguien que no sea el sujeto.
 - **Los directorios agregadores son un atajo.** Si un motor cita un directorio, estar en él es más rápido que construir autoridad desde cero. La lista concreta cambia: recógela cada semana.
 - **La coherencia entre fuentes construye la entidad.** Nombre, ubicación y titular deben coincidir en web, LinkedIn y GitHub. Una discrepancia rompe el vínculo.
-- **No confundas motores.** Que Perplexity ya cite la web no implica que ChatGPT la vea; suelen usar índices distintos. Mide cada uno y diagnostica por separado.
+- **Cada motor es un canal distinto y se diagnostica por separado.** Que Perplexity ya cite la web no implica que ChatGPT la vea: usan índices distintos, y la acción para arreglar uno no sirve para el otro. Por eso la batería va entera a los tres y el panel nunca los promedia.
+- **Una consulta ganada no se queda ganada.** Las posiciones se mueven en las dos direcciones; si el sujeto cae, busca qué aportó el competidor que le adelantó, que suele ser una credencial externa y no más texto.
 - **Respeta la privacidad del sujeto.** Si pide no publicar un dato (ubicación, email, repos), no lo reclames dos veces: propón la alternativa coherente y explica el coste real, que suele ser menor de lo que parece.
 
 ## Alcance
