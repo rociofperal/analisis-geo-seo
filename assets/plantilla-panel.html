@@ -57,6 +57,8 @@ ul{margin:6px 0 0;padding-left:18px} li{margin-bottom:5px}
 code{background:#f2f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
 .chartbox{height:230px}
 .grupo td{background:#f7f5f2;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);padding:8px 10px}
+.det td{padding-top:0;border-bottom:1px solid var(--line);font-size:13px;color:var(--mut)}
+.q td{border-bottom:none;padding-bottom:4px}
 </style>
 </head>
 <body>
@@ -90,17 +92,22 @@ code{background:#f2f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
 <h2><span class="n">1</span> Resultados GEO — {{N_PREGUNTAS}} preguntas x 3 motores</h2>
 <div class="card">
 <p style="margin:0 0 14px;font-size:13.5px;color:var(--mut)">{{NOTA_METODO}}</p>
+<!-- MATRIZ: una fila por pregunta y una columna por motor. Con 45 resultados
+     una tabla plana es ilegible; asi ademas se ve de un vistazo el patron:
+     fila verde en un motor y roja en los otros dos = problema de indice;
+     fila entera roja = problema de contenido. -->
 <table>
-<thead><tr><th style="width:24%">Consulta</th><th style="width:11%">Motor</th><th style="width:11%">¿Apareces?</th><th>Qué respondió</th></tr></thead>
+<thead><tr><th style="width:40%">Consulta</th><th style="width:14%">Perplexity</th><th style="width:14%">ChatGPT</th><th style="width:14%">Gemini</th></tr></thead>
 <tbody>
-<tr class="grupo"><td colspan="4">A · Reconocimiento de entidad — <span style="color:var(--grn)">{{A_ACIERTOS}}</span></td></tr>
-<tr>
+<tr class="grupo"><td colspan="4">A · Reconocimiento de entidad — Perplexity {{A_PPX}} · ChatGPT {{A_GPT}} · Gemini {{A_GEM}}</td></tr>
+<tr class="q">
   <td>{{CONSULTA}}</td>
-  <td>{{MOTOR}}</td>
   <!-- p-ok recomendado · p-wr citado pero no nombrado · p-ko ausente -->
-  <td><span class="pill p-ok">Sí · correcta</span></td>
-  <td>{{QUE_RESPONDIO}}<div class="quote">«{{CITA_LITERAL}}»</div></td>
+  <td><span class="pill p-ok">nº 1</span></td>
+  <td><span class="pill p-wr">Citada</span></td>
+  <td><span class="pill p-ko">No</span></td>
 </tr>
+<tr class="det"><td colspan="4">{{QUE_RESPONDIO}}<div class="quote">«{{CITA_LITERAL}}»</div></td></tr>
 </tbody>
 </table>
 </div>
