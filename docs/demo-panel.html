@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- PANEL DE DEMOSTRACIÓN — datos ficticios de una marca inventada.
-     Sirve para ilustrar el formato de salida de la skill sin exponer
-     los datos de nadie. Ábrelo en el navegador y captura. -->
+<!-- Panel de demostración de la skill analisis-geo-seo. DATOS FICTICIOS.
+     No corresponde a ninguna persona ni empresa real. Sirve para ver el
+     formato de salida: 15 preguntas x 3 motores, tarjetas y series por motor. -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>Panel GEO + SEO · demo</title>
+<title>Panel GEO + SEO · ejemplo.com (demostración)</title>
 <style>
 :root{
   color-scheme: light;
@@ -18,7 +18,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system
 .wrap{max-width:1080px;margin:0 auto}
 h1{font-size:26px;margin:0 0 4px;letter-spacing:-.4px}
 .sub{color:var(--mut);font-size:13.5px;margin-bottom:10px}
-.demo{background:#fff6d6;border:1px solid #e8d69a;border-radius:8px;padding:9px 13px;font-size:12.5px;color:#7a5c00;margin:0 0 16px}
+.aviso{background:#fff8e1;border:1px solid #f0e0a8;border-radius:8px;padding:10px 14px;font-size:13px;margin:0 0 16px}
 .delta{background:var(--accbg);border:1px solid #c9d5ef;border-left:4px solid var(--acc);border-radius:10px;padding:13px 16px;margin:0 0 20px;font-size:13.5px}
 .delta b{color:var(--acc)}
 h2{font-size:17px;margin:34px 0 12px;letter-spacing:-.2px;display:flex;align-items:center;gap:8px}
@@ -44,245 +44,293 @@ tr:last-child td{border-bottom:none}
 .quote{font-size:13px;color:var(--mut);font-style:italic;border-left:2px solid var(--line);padding-left:10px;margin-top:6px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+ul{margin:6px 0 0;padding-left:18px} li{margin-bottom:5px}
 .foot{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);color:var(--mut);font-size:12px}
 code{background:#f2f0ec;padding:1px 5px;border-radius:4px;font-size:12.5px}
 .chartbox{height:230px}
 .grupo td{background:#f7f5f2;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);padding:8px 10px}
+.det td{padding-top:0;border-bottom:1px solid var(--line);font-size:13px;color:var(--mut)}
+.q td{border-bottom:none;padding-bottom:4px}
+.up{color:var(--grn);font-weight:600} .dn{color:var(--red);font-weight:600}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<h1>Panel GEO + SEO — Marca de Ejemplo</h1>
-<div class="sub">Semana 2 · <b>3 agosto 2026</b> · <code>ejemplo.com</code> · Se actualiza cada lunes a las 9:00</div>
+<h1>Panel GEO + SEO — Sujeto de ejemplo</h1>
+<div class="sub">Semana 4 · <b>10 agosto 2026</b> · <code>ejemplo.com</code> · Se actualiza cada lunes a las 9:00</div>
 
-<div class="demo">Panel de demostración con datos ficticios. Ilustra el formato de salida de la skill; no corresponde a ninguna marca real.</div>
+<div class="aviso"><b>Panel de demostración con datos ficticios.</b> Ilustra el formato de salida de la skill; no corresponde a ninguna persona ni empresa real.</div>
 
 <div class="delta">
   <b>Cambios desde la semana anterior.</b>
-  La colisión de entidad con la homónima <b>ha desaparecido</b> de las respuestas de Perplexity, que ahora describe correctamente el perfil profesional y <b>cita <code>ejemplo.com</code> como fuente</b>. Primeras apariciones del histórico: <b>4 de 22 consultas</b> (eran 0). La arquitectura ha pasado de 3 a <b>12 URLs indexables</b> con contenido real. <b>Sin avance:</b> ChatGPT sigue sin encontrarla —solo rastrea perfiles sociales, no la web—, el hub de contenidos sigue vacío y los nichos de producto siguen a cero.
+  <b>Primera semana con la batería completa en los tres motores</b>: antes solo se lanzaba una consulta suelta en ChatGPT y otra en Gemini, así que sus series empiezan de cero aquí y no son comparables con las semanas anteriores. Perplexity sí mantiene su serie: sube de 5 a <span class="up">6 de 15</span>. ChatGPT arranca en 3 de 15 y Gemini en 1 de 15, lo que confirma que son canales distintos y no un único número. La arquitectura pasa de 3 a <b>12 URLs indexables</b> y la puntuación técnica de 61 a 84. <b>Sin avance:</b> los bloques de producto y de negocio siguen a cero en los tres motores.
 </div>
 
 <div class="scores">
-  <div class="score v-amb"><div class="lab">Visibilidad GEO</div><div class="val">4 / 22</div><div class="note">Era 0/22. Citada como fuente en 6 consultas</div></div>
-  <div class="score v-grn"><div class="lab">SEO técnico</div><div class="val">84 / 100</div><div class="note">Era 61. Base semántica y arquitectura resueltas</div></div>
+  <div class="score v-amb"><div class="lab">Perplexity</div><div class="val">6 / 15</div><div class="note">Era 5/15. Cita el dominio en 8 de las 15</div></div>
+  <div class="score v-amb"><div class="lab">ChatGPT</div><div class="val">3 / 15</div><div class="note">Serie nueva: antes solo 1 consulta de contraste</div></div>
+  <div class="score v-red"><div class="lab">Gemini</div><div class="val">1 / 15</div><div class="note">Serie nueva. No cita fuentes: citación N/A por diseño</div></div>
+  <div class="score v-grn"><div class="lab">SEO técnico</div><div class="val">84 / 100</div><div class="note">Era 61. Arquitectura y schema resueltos</div></div>
   <div class="score v-grn"><div class="lab">Páginas indexables</div><div class="val">12</div><div class="note">Eran 3</div></div>
-  <div class="score v-grn"><div class="lab">Rendimiento</div><div class="val">Bien</div><div class="note">TTFB 88 ms · carga 1,1 s · HTTP/2 · SSR</div></div>
+  <div class="score v-grn"><div class="lab">Rendimiento</div><div class="val">Bien</div><div class="note">TTFB 88 ms · carga 1,2 s · HTTP/2 · SSR</div></div>
 </div>
 
 <div class="win">
   <b>✓ Resuelto: la colisión de entidad.</b><br>
-  La semana pasada, a la pregunta de quién es el sujeto, el motor respondía describiendo a <b>otra persona</b> con el mismo nombre y más presencia indexada. Esa respuesta ya no aparece: ahora el perfil correcto es el primero y <code>ejemplo.com</code> figura entre las fuentes.<br><br>
-  <b>Queda un residuo:</b> el motor todavía pide desambiguación antes de responder, porque compite con ruido de otros homónimos. La entidad existe, pero aún no es la acepción por defecto del nombre.
+  Hace tres semanas los tres motores respondían a la consulta de nombre describiendo a una homónima de otro sector. Ya no aparece en ninguna de las 45 ejecuciones. Lo que lo desbloqueó, por orden: la nota de desambiguación del <code>llms.txt</code>, los <code>alternateName</code> del schema <code>Person</code>, y corregir el nombre visible de LinkedIn para que coincidiera exactamente con el nombre por el que se busca.
 </div>
 
 <div class="alert">
-  <b>⚠ El problema número 1 esta semana: un motor lee la web y el otro no.</b><br>
-  Perplexity ya cita <code>ejemplo.com</code>. ChatGPT, con búsqueda activa, cita <b>solo perfiles sociales</b> y responde que no encuentra trayectoria pública verificable. Los dos usan índices distintos, así que el diagnóstico es distinto: aquí el problema no es la web, es que <b>el buscador que alimenta a ChatGPT no la tiene indexada</b>. La acción es dar de alta el sitemap en su herramienta para webmasters, no seguir tocando el sitio.
+  <b>⚠ El problema número 1 esta semana: solo habla el sujeto de sí mismo.</b><br>
+  En las seis consultas donde Perplexity sí recomienda, en cuatro añade una reserva del tipo «<i>conviene validar referencias independientes</i>». No es falta de contenido —cita la web con precisión— sino falta de una segunda voz. Es el patrón que separa aparecer en la respuesta de ganar el encargo.
 </div>
 
-<h2><span class="n">1</span> Resultados GEO — las 22 consultas ejecutadas</h2>
+<h2><span class="n">1</span> Resultados GEO — 15 preguntas × 3 motores</h2>
 <div class="card">
-<p style="margin:0 0 14px;font-size:13.5px;color:var(--mut)">20 preguntas en Perplexity más dos contrastes en ChatGPT y Gemini. La transcripción literal completa se genera en un fichero aparte.</p>
+<p style="margin:0 0 14px;font-size:13.5px;color:var(--mut)">Las mismas 15 preguntas, literales, en Perplexity, ChatGPT y Gemini. Una conversación nueva por consulta. La transcripción literal está en <code>transcripcion-2026-08-10.md</code>.</p>
 <table>
-<thead><tr><th style="width:24%">Consulta</th><th style="width:11%">Motor</th><th style="width:12%">¿Aparece?</th><th>Qué respondió</th></tr></thead>
+<thead><tr><th style="width:40%">Consulta</th><th style="width:14%">Perplexity</th><th style="width:14%">ChatGPT</th><th style="width:14%">Gemini</th></tr></thead>
 <tbody>
-<tr class="grupo"><td colspan="4">A · Reconocimiento de entidad — <span style="color:var(--grn)">3 de 5</span></td></tr>
-<tr>
-  <td>A1 · ¿Quién es [nombre] y cuál es su trayectoria?</td>
-  <td>Perplexity</td>
-  <td><span class="pill p-ok">Sí · correcta</span></td>
-  <td>Describe la trayectoria real y <b>cita la web</b> entre sus fuentes. La homónima ha desaparecido de la respuesta.<div class="quote">«…la profesional que se presenta como especialista en [sector], con más de una década en…»</div></td>
-</tr>
-<tr>
-  <td>A1 · Misma pregunta, especificando la profesión</td>
-  <td>ChatGPT (web)</td>
-  <td><span class="pill p-ko">No</span></td>
-  <td>Solo cita perfiles sociales. Enumera la evidencia que le falta.<div class="quote">«No aparecen perfiles técnicos públicos, ponencias, publicaciones ni referencias en medios especializados asociados a ese nombre»</div></td>
-</tr>
-<tr>
-  <td>A2 · Perfil profesional y especialidad</td>
-  <td>Perplexity</td>
-  <td><span class="pill p-ok">Sí · correcta</span></td>
-  <td>Reconstrucción fiel párrafo a párrafo, con cita a la web en cada bloque.</td>
-</tr>
-<tr>
-  <td>A3 · Productos o servicios desarrollados</td>
-  <td>Perplexity</td>
-  <td><span class="pill p-ok">Sí · correcta</span></td>
-  <td>Nombra los cinco productos del portafolio. Eran invisibles en la línea base.</td>
-</tr>
 
-<tr class="grupo"><td colspan="4">B · Nicho principal — <span style="color:var(--amb)">1 de 4</span></td></tr>
-<tr>
-  <td>B1 · Encargo concreto con restricción normativa</td>
-  <td>Perplexity</td>
+<tr class="grupo"><td colspan="4">A · Reconocimiento de entidad — Perplexity 3/3 · ChatGPT 2/3 · Gemini 1/3</td></tr>
+<tr class="q">
+  <td>A1 · ¿Quién es [Nombre] y cuál es su trayectoria?</td>
+  <td><span class="pill p-ok">Sí · correcta</span></td>
+  <td><span class="pill p-ok">Sí · correcta</span></td>
+  <td><span class="pill p-ok">Sí · correcta</span></td>
+</tr>
+<tr class="det"><td colspan="4">La única consulta que ganan los tres. Perplexity cita el dominio en seis bloques; ChatGPT lo cita catorce veces; Gemini acierta pero sin fuentes.<div class="quote">«…es una especialista española en desarrollo full-stack e integración de IA»</div></td></tr>
+<tr class="q">
+  <td>A2 · ¿Qué perfil tiene [profesión] [Nombre] en España?</td>
+  <td><span class="pill p-ok">Sí · correcta</span></td>
+  <td><span class="pill p-ok">Sí · correcta</span></td>
+  <td><span class="pill p-ko">No</span></td>
+</tr>
+<tr class="det"><td colspan="4">Los dos motores con búsqueda web reconstruyen el perfil con fidelidad. Ojo a los verbos de distancia («afirma», «declara»): señalan que leen una sola fuente.</td></tr>
+<tr class="q">
+  <td>A3 · ¿Qué productos ha desarrollado con [tecnología]?</td>
+  <td><span class="pill p-ok">Sí · correcta</span></td>
+  <td><span class="pill p-ko">No</span></td>
+  <td><span class="pill p-ko">No</span></td>
+</tr>
+<tr class="det"><td colspan="4">Perplexity nombra los cinco productos y explica cómo funciona uno. ChatGPT conoce a la persona pero no sus productos: le faltan las páginas de proyecto en su índice.</td></tr>
+
+<tr class="grupo"><td colspan="4">B · Nicho principal — Perplexity 2/3 · ChatGPT 1/3 · Gemini 0/3</td></tr>
+<tr class="q">
+  <td>B1 · Encargo directo con restricción normativa</td>
+  <td><span class="pill p-wr">Sí · nº 3 <span class="dn">▼2</span></span></td>
+  <td><span class="pill p-ok">Sí · nº 2</span></td>
+  <td><span class="pill p-ko">No</span></td>
+</tr>
+<tr class="det"><td colspan="4">Baja del nº 1 al nº 3 en Perplexity, y el motor dice por qué. La evidencia citada es más precisa que nunca; lo que falta es aval externo.<div class="quote">«Conviene validar referencias independientes antes de contratar»</div></td></tr>
+<tr class="q">
+  <td>B2 · Especialista en [X] que además [Y]</td>
   <td><span class="pill p-ok">Sí · nº 1</span></td>
-  <td><b>Recomendada en primer lugar</b>, por delante de tres empresas del sector. Justifica con detalles que solo están en la página de servicios.<div class="quote">«Ideal si buscas una persona de referencia, no solo una empresa»</div></td>
-</tr>
-<tr>
-  <td>B2 · Perfil híbrido del mismo nicho</td>
-  <td>Perplexity</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Sigue interpretando «especialista» como «empresa». Falta el término clave ligado a un caso propio con nombre.</td>
-</tr>
-<tr>
-  <td>B3 · ¿Existe esta categoría de profesional?</td>
-  <td>Perplexity</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Describe con precisión el perfil y cita perfiles sociales como fuente principal, pero no lo encuentra. Causa probable: el nombre visible del perfil no coincide con el nombre por el que se busca.</td>
 </tr>
-<tr>
-  <td>B4 · Quién puede auditar este tipo de proyecto</td>
-  <td>Perplexity</td>
-  <td><span class="pill p-wr">Citada, no nombrada</span></td>
-  <td>La web aparece <b>3 veces como cita</b> alimentando la respuesta, pero el motor se queda con la categoría genérica. El contenido describe capacidades, no una oferta atribuible con método y entregable.</td>
+<tr class="det"><td colspan="4">El cruce poco común sigue siendo el terreno más ganable: poca competencia y una página propia que lo explica basta para liderar.</td></tr>
+<tr class="q">
+  <td>B3 · ¿Qué profesionales tienen casos de éxito reales?</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td><span class="pill p-ko">No</span></td>
+  <td><span class="pill p-ko">No</span></td>
 </tr>
+<tr class="det"><td colspan="4">Fila entera roja: no es problema de índice, es de contenido. La respuesta se construye sobre porcentajes ajenos y aquí no hay ni una cifra publicada.</td></tr>
 
-<tr class="grupo"><td colspan="4">C · Segundo nicho — <span style="color:var(--red)">0 de 4</span></td></tr>
-<tr>
-  <td>C1 · Recomiéndame un especialista en [tecnología]</td>
-  <td>Perplexity</td>
+<tr class="grupo"><td colspan="4">C · Segundo nicho — Perplexity 1/3 · ChatGPT 0/3 · Gemini 0/3</td></tr>
+<tr class="q">
+  <td>C1 · Encargo directo</td>
+  <td><span class="pill p-ok">Sí · nº 1</span></td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Cita un <b>directorio agregador</b> como fuente. Entrar en él es más rápido que construir autoridad propia.</td>
-</tr>
-<tr>
-  <td>C2 · Freelance para implantar [servicio]</td>
-  <td>Perplexity</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Deriva a plataformas de freelance y a «rankings de 2026». El servicio está declarado en el schema, pero sin caso ni cifra no compite.</td>
 </tr>
-<tr>
-  <td>C3 · Expertos en [herramienta]</td>
-  <td>Perplexity</td>
+<tr class="det"><td colspan="4">Recomendación única, con cinco argumentos extraídos de la web. Deja una nota al pie: no ha podido verificar una de las tecnologías declaradas.</td></tr>
+<tr class="q">
+  <td>C2 · Especialista en [X] que además [Y]</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Nombra a un competidor individual con <b>tarifa publicada</b>, «casos reales en producción» y respaldo de una <b>fuente de terceros</b>. Ese es el listón.</td>
-</tr>
-<tr>
-  <td>C4 · Quién tiene casos de éxito reales</td>
-  <td>Perplexity</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>La pregunta pide «casos reales» y el motor responde con «casos <b>documentados</b>». Sin sector, problema y cifra, no hay nada citable.</td>
+  <td><span class="pill p-ko">No</span></td>
 </tr>
+<tr class="det"><td colspan="4">Los cinco perfiles recomendados entran <b>por LinkedIn</b>, ninguno por su web. La puerta de este bloque no es el sitio propio.</td></tr>
+<tr class="q">
+  <td>C3 · Casos de éxito reales</td>
+  <td><span class="pill p-wr">Citada</span></td>
+  <td><span class="pill p-ko">No</span></td>
+  <td><span class="pill p-ko">No</span></td>
+</tr>
+<tr class="det"><td colspan="4">El estado más informativo: la web alimenta la respuesta pero el motor se queda con la categoría genérica. Falta un método con nombre, fases y entregable.</td></tr>
 
-<tr class="grupo"><td colspan="4">D · Producto — <span style="color:var(--red)">0 de 4</span></td></tr>
-<tr>
-  <td>D1 · Productos destacados de la categoría</td>
-  <td>Perplexity</td>
+<tr class="grupo"><td colspan="4">D · Producto — Perplexity 0/3 · ChatGPT 0/3 · Gemini 0/3</td></tr>
+<tr class="q">
+  <td>D1 · Categoría de producto + tecnología</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Gana un competidor por <b>declararlo por escrito</b> en una página propia, no por tener mejor producto.<div class="quote">«Se describe explícitamente como… accesible desde el navegador»</div></td>
-</tr>
-<tr>
-  <td>D2 · Alternativas con modelo de suscripción</td>
-  <td>Perplexity</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Admite que no hay referencia pública. Hueco libre. Dice dónde mira: repositorios públicos y portafolios.</td>
-</tr>
-<tr>
-  <td>D3 · Integración técnica poco común</td>
-  <td>Perplexity</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Confirma que <b>el nicho está vacío</b> y entrega el vocabulario exacto que buscaría. La aparición más fácil de ganar.</td>
 </tr>
-<tr>
-  <td>D4 · Quién ha desarrollado este tipo de solución</td>
-  <td>Perplexity</td>
+<tr class="det"><td colspan="4">El motor construye una tabla cuya primera columna es una característica <b>declarada por escrito</b>. El competidor gana por decirlo en su página, no por tener mejor producto.</td></tr>
+<tr class="q">
+  <td>D2 · Integración técnica poco común</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Solo puede ofrecer productos con autores anónimos. Una persona con nombre no tendría competencia identificable.</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td><span class="pill p-ko">No</span></td>
 </tr>
+<tr class="det"><td colspan="4"><b>Nadie ocupa el hueco</b>: los tres motores responden con un perfil de puesto en lugar de nombres. Es la victoria más barata pendiente.</td></tr>
+<tr class="q">
+  <td>D3 · Autoría de un producto del sector</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td><span class="pill p-ko">No</span></td>
+  <td><span class="pill p-ko">No</span></td>
+</tr>
+<tr class="det"><td colspan="4">Solo dos personas identificables en 53 fuentes: la mayoría de productos tienen autores anónimos. Ser una persona con nombre es aquí una ventaja sin explotar.</td></tr>
 
-<tr class="grupo"><td colspan="4">E · Negocio y consultoría — <span style="color:var(--red)">0 de 5</span></td></tr>
-<tr>
-  <td>E1 · Perfil híbrido poco habitual</td>
-  <td>Perplexity</td>
+<tr class="grupo"><td colspan="4">E · Negocio y consultoría — Perplexity 0/3 · ChatGPT 0/3 · Gemini 0/3</td></tr>
+<tr class="q">
+  <td>E1 · Perfil híbrido poco frecuente</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Nombra a una persona concreta, citando su perfil social. La barrera ha bajado y la puerta es ese perfil.</td>
-</tr>
-<tr>
-  <td>E1 · Misma pregunta ampliada</td>
-  <td>Gemini</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>No cita fuentes web. Su valor es otro: <b>regala la taxonomía del mercado</b> y tres directorios de entrada.<div class="quote">«perfil unicornio» + cadena de búsqueda booleana lista para usar</div></td>
+  <td><span class="pill p-ko">No</span></td>
 </tr>
-<tr>
+<tr class="det"><td colspan="4">Ningún motor nombra a nadie: responden con taxonomía. Los tres coinciden en las etiquetas con las que el mercado busca este perfil, y ninguna está en la web ni en LinkedIn.<div class="quote">«El perfil que buscas existe, pero normalmente no se publica con ese nombre»</div></td></tr>
+<tr class="q">
   <td>E2 · Consultoría especializada</td>
-  <td>Perplexity</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Solo consultoras. Es la consulta donde la autoridad externa existente está peor aprovechada.</td>
-</tr>
-<tr>
-  <td>E3 · Certificaciones + servicio</td>
-  <td>Perplexity</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Construye una <b>tabla comparativa</b>. Para entrar hay que tener las cuatro celdas rellenables desde una sola página.</td>
-</tr>
-<tr>
-  <td>E4 · Rescate de un proyecto estancado</td>
-  <td>Perplexity</td>
   <td><span class="pill p-ko">No</span></td>
-  <td>Todos los recomendados venden <b>un método con nombre y plazo</b>. La web ofrece el servicio sin bautizar el proceso. Es cambio de copy, no de desarrollo.</td>
 </tr>
+<tr class="det"><td colspan="4">Gana la consultora con ficha completa: certificación vigente, sede, sectores, teléfono y email en una sola página.</td></tr>
+<tr class="q">
+  <td>E3 · Rescate / auditoría de un proyecto</td>
+  <td><span class="pill p-ko">No</span></td>
+  <td><span class="pill p-ko">No</span></td>
+  <td><span class="pill p-ko">No</span></td>
+</tr>
+<tr class="det"><td colspan="4">Todos los recomendados venden un <b>método bautizado</b> con fases y plazo. Un servicio descrito no se cita; uno con nombre y plazo, sí. Es cambio de copy, no de desarrollo.</td></tr>
+
 </tbody>
 </table>
 </div>
 
 <h2><span class="n">1b</span> Lo que los motores te han dicho que necesitan</h2>
 <div class="card">
-<p style="margin:0 0 12px;font-size:13.5px">Frases literales en las que el motor explica qué evidencia busca. Son las más accionables porque no hay que interpretarlas.</p>
+<p style="margin:0 0 12px;font-size:13.5px">Frases literales de esta semana en las que el motor explica qué evidencia busca. Son las más accionables porque no hay que interpretarlas.</p>
 <table>
 <thead><tr><th style="width:44%">Lo que dijo el motor</th><th>Lo que significa</th></tr></thead>
 <tbody>
-<tr><td><i>«No aparecen perfiles técnicos públicos, ponencias, publicaciones ni referencias en medios especializados»</i></td><td>Criterio de admisión a la categoría. Sin rastro público verificable no entras, por buena que sea la web.</td></tr>
-<tr><td><i>«Ideal si buscas una persona de referencia, no solo una empresa»</i></td><td>El motor ha encontrado solo el argumento diferencial. Conviene convertirlo en copy explícito.</td></tr>
-<tr><td><i>«Se describe explícitamente como…»</i> (sobre el competidor que gana)</td><td>Gana por declararlo por escrito, no por mejor producto. Hace falta una URL que lo diga.</td></tr>
-<tr><td>Competidor con <i>«casos reales en producción»</i>, tarifa publicada y aval de un tercero</td><td>La pieza que falta es la cita externa: un ranking o comparativa ajena, no solo la web propia.</td></tr>
-<tr><td>Directorios citados como fuente en 3 consultas distintas</td><td>Estar en un agregador que el motor ya cita es un atajo frente a construir autoridad desde cero.</td></tr>
+<tr><td><i>«Conviene validar referencias independientes antes de contratar»</i> — Perplexity, B1</td><td>Explica la caída del nº 1 al nº 3. El contenido ya es suficiente; falta que lo respalde alguien que no sea el sujeto.</td></tr>
+<tr><td><i>«No he podido verificar de forma específica proyectos con [tecnología]»</i> — Perplexity, C1</td><td>Recomienda igualmente, pero deja nota al pie. Se cierra con una línea de copy.</td></tr>
+<tr><td><i>«Declara expresamente que es [característica]»</i> — Perplexity, D1</td><td>La columna comparativa se rellena con lo que la página dice por escrito, no con lo que el producto hace.</td></tr>
+<tr><td><i>«Pide una demo funcional y dos casos de éxito antes de contratar»</i> — Perplexity, C2</td><td>Los cinco perfiles de esa consulta entran por publicaciones de LinkedIn, no por su web.</td></tr>
+<tr><td>Gemini: <i>«publican contenido compartiendo las aplicaciones que han desarrollado»</i></td><td>Describe la conducta que hace visible al perfil: publicar el producto, no el currículum.</td></tr>
+<tr><td>Competidor: método con nombre, fases y plazo de entrega</td><td>Tercera semana con la misma evidencia. Un formato bautizado se cita; un servicio descrito, no.</td></tr>
 </tbody>
 </table>
 </div>
 
-<h2><span class="n">2</span> Plan de acción priorizado</h2>
+<h2><span class="n">2</span> El hallazgo aprovechable</h2>
+<div class="grid2">
+  <div class="card"><b style="color:var(--grn)">La web ya funciona como fuente</b><p style="margin:8px 0 0;font-size:13.5px">El dominio se cita en 8 de las 15 consultas de Perplexity y en 5 de las de ChatGPT. El schema <code>Person</code>, el <code>llms.txt</code> y las páginas con contenido real han hecho su trabajo.<br><br>El límite es que toda la narrativa se apoya en una única fuente propia. Lo que falta ya no es más web: es <b>corroboración externa</b>.</p></div>
+  <div class="card"><b style="color:var(--acc)">Medir por motor cambia el diagnóstico</b><p style="margin:8px 0 0;font-size:13.5px">Agregado, esto sería «22 % de visibilidad». Separado, es <b>40 % / 20 % / 7 %</b>, y cada cifra pide una acción distinta: Perplexity necesita avales, ChatGPT necesita que sus páginas de producto entren en el índice de Bing, y Gemini ni siquiera rastrea la web.<br><br>Con un solo número, las tres acciones quedarían invisibles.</p></div>
+</div>
+
+<h2><span class="n">3</span> Auditoría técnica</h2>
 <div class="card">
-<p style="margin:0 0 12px;font-size:13.5px;color:var(--mut)">Reordenado cada semana. Las acciones 1, 2 y 4 de la semana anterior están resueltas y se retiran del plan.</p>
+<p style="margin:0 0 14px;font-size:13px;color:var(--mut)">Rastreo del DOM renderizado y comprobación de códigos de respuesta el 10/08/2026.</p>
+<table>
+<thead><tr><th style="width:22%">Elemento</th><th style="width:13%">Estado</th><th>Detalle</th></tr></thead>
+<tbody>
+<tr><td>Arquitectura de páginas</td><td><span class="pill p-ok">Resuelto</span></td><td>De 3 a <b>12 URLs indexables</b>, todas 200 y todas en el sitemap, con página propia por proyecto.</td></tr>
+<tr><td>JSON-LD por tipo de página</td><td><span class="pill p-ok">Resuelto</span></td><td><code>Person</code> + <code>Organization</code> globales, más <code>SoftwareApplication</code>, <code>FAQPage</code> y <code>BreadcrumbList</code> donde corresponde.</td></tr>
+<tr><td>llms.txt</td><td><span class="pill p-ok">Correcto</span></td><td>200, con nota de desambiguación frente a la homónima. Es lo que mejor correlaciona con el reconocimiento de entidad.</td></tr>
+<tr><td>robots.txt</td><td><span class="pill p-ok">Correcto</span></td><td>Paso nominal a GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended y CCBot. Apunta al sitemap.</td></tr>
+<tr><td><code>&lt;lastmod&gt;</code> en el sitemap</td><td><span class="pill p-ko">Pendiente</span></td><td>Ausente. Sin él, un buscador no sabe que las páginas que rastreó cuando eran malas han cambiado: es la causa de que seis URLs sigan en «descubierta pero no rastreada».</td></tr>
+<tr><td>Imágenes</td><td><span class="pill p-wr">Pendiente</span></td><td>Cuatro páginas sin ninguna imagen. Sin capturas no hay evidencia visual que respalde los casos.</td></tr>
+<tr><td>Legibilidad y táctil</td><td><span class="pill p-wr">Pendiente</span></td><td>21 elementos de texto por debajo de 12 px y 5 objetivos táctiles por debajo de 44 px.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">3b</span> Huella digital fuera de la web</h2>
+<div class="card">
+<table>
+<thead><tr><th style="width:16%">Fuente</th><th style="width:13%">Estado</th><th>Detalle</th></tr></thead>
+<tbody>
+<tr><td>LinkedIn</td><td><span class="pill p-ok">Resuelto</span></td><td>El nombre visible ya coincide exactamente con el nombre por el que se busca, y ChatGPT lo cita como fuente. Falta llevar al titular las etiquetas de rol que usan los motores.</td></tr>
+<tr><td>GitHub</td><td><span class="pill p-wr">En marcha</span></td><td>Perfil con nombre completo, bio y enlace a la web, pero <b>3 repositorios, 0 estrellas y 0 seguidores</b>. Ninguno de los productos del README tiene repo público: es media tarea.</td></tr>
+<tr><td>Índice de búsqueda</td><td><span class="pill p-wr">Parcial</span></td><td>2 URLs indexadas y 1 backlink. Los motores generativos ya leen el sitio; la búsqueda clásica todavía no.</td></tr>
+<tr><td>Menciones de terceros</td><td><span class="pill p-ko">Sin rastro</span></td><td>Ninguna ficha en directorios ni rankings ajenos. Es exactamente lo que piden las reservas del bloque B.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">4</span> Plan de acción priorizado</h2>
+<div class="card">
+<p style="margin:0 0 12px;font-size:13.5px;color:var(--mut)">Reordenado según lo que queda pendiente. Las acciones de arquitectura y de LinkedIn de semanas anteriores están resueltas y se retiran del plan.</p>
 <table>
 <thead><tr><th style="width:8%">Prioridad</th><th style="width:30%">Acción</th><th>Por qué mueve la aguja</th></tr></thead>
 <tbody>
-<tr><td><span class="pill p-crit">1</span></td><td>Corregir el nombre visible del perfil social</td><td><b>Dos minutos, impacto inmediato.</b> Es la única fuente que lee uno de los motores, y hoy el nombre no coincide con el de la consulta. Desbloquea tres consultas de golpe.</td></tr>
-<tr><td><span class="pill p-crit">2</span></td><td>Alta en la herramienta para webmasters del buscador que alimenta al motor bloqueado</td><td>Un motor ya rastrea la web y el otro no. Enviar el sitemap allí es la vía directa para replicar el resultado que ya funciona.</td></tr>
-<tr><td><span class="pill p-crit">3</span></td><td>Una página por producto, con cifra medible</td><td>Los competidores ganan las consultas de producto solo por tener una página que lo explica. Es la aparición más barata que queda.</td></tr>
-<tr><td><span class="pill p-alt">4</span></td><td>Bautizar los métodos de servicio</td><td>Cambio de copy, no de desarrollo. Un método con nombre, fases y plazo se cita; un servicio sin explicar, no.</td></tr>
-<tr><td><span class="pill p-alt">5</span></td><td>Abrir el hub de contenidos con 3 artículos de nicho</td><td>Los temas vienen dictados por los propios motores: el vocabulario exacto que dijeron buscar y no encontrar.</td></tr>
-<tr><td><span class="pill p-med">6</span></td><td>Alta en los directorios citados</td><td>Los tres agregadores que aparecieron como fuente esta semana.</td></tr>
+<tr><td><span class="pill p-crit">1</span></td><td>Conseguir dos o tres referencias verificables públicas</td><td>Es la causa literal de la caída del nº 1 al nº 3, y aparece como reserva en cuatro de las seis consultas ganadas. Reseñas con nombre, un logo de cliente o una ficha en un ranking ajeno.</td></tr>
+<tr><td><span class="pill p-crit">2</span></td><td>Publicar repositorios reales en GitHub</td><td>Con 3 repos y 0 estrellas el perfil no acredita nada. Dos motores lo piden por nombre como criterio de admisión.</td></tr>
+<tr><td><span class="pill p-crit">3</span></td><td>Artículo técnico del nicho vacío (D2)</td><td>Ningún motor nombra a nadie en esa consulta y los tres dictan el vocabulario exacto. Es la aparición más barata que queda.</td></tr>
+<tr><td><span class="pill p-alt">4</span></td><td>Declarar por escrito la característica que compara D1</td><td>El competidor gana por decirlo en su página. La página propia ya existe: faltan cuatro frases con las palabras exactas.</td></tr>
+<tr><td><span class="pill p-alt">5</span></td><td>Una cifra medible por caso</td><td>Las respuestas de solvencia se construyen sobre porcentajes. Sin un número por proyecto no hay nada citable.</td></tr>
+<tr><td><span class="pill p-alt">6</span></td><td>Añadir <code>&lt;lastmod&gt;</code> al sitemap</td><td>Desatasca las seis URLs en «descubierta pero no rastreada» y es el arreglo con mejor relación impacto/esfuerzo del bloque técnico.</td></tr>
+<tr><td><span class="pill p-med">7</span></td><td>Bautizar los métodos de servicio</td><td>Cambio de copy, no de desarrollo. Un método con nombre, fases y plazo se cita; un servicio descrito, no.</td></tr>
 </tbody>
 </table>
 </div>
 
-<h2><span class="n">3</span> Evolución</h2>
+<h2><span class="n">5</span> Quién ocupa hoy tu sitio</h2>
+<div class="card">
+<table>
+<thead><tr><th style="width:28%">Consulta</th><th style="width:14%">Tu posición</th><th>Recomendados por los LLMs</th></tr></thead>
+<tbody>
+<tr><td>B2 · Cruce poco común</td><td><span class="pill p-ok">nº 1</span></td><td>Recomendación única</td></tr>
+<tr><td>C1 · Encargo del segundo nicho</td><td><span class="pill p-ok">nº 1</span></td><td>Recomendación única, con una reserva</td></tr>
+<tr><td>B1 · Encargo con restricción normativa</td><td><span class="pill p-wr">nº 3 <span class="dn">▼2</span></span></td><td>Por delante: dos empresas con certificación oficial del fabricante</td></tr>
+<tr><td>C3 · Casos de éxito</td><td><span class="pill p-wr">Citada</span></td><td>Consultoras con casos documentados y cifras</td></tr>
+<tr><td>D1 · Categoría de producto</td><td><span class="pill p-ko">Fuera</span></td><td>Un competidor con la característica declarada por escrito, y cuatro «no confirmadas»</td></tr>
+<tr><td>D2 · Integración poco común</td><td><span class="pill p-ko">Fuera</span></td><td><b>Nadie.</b> Hueco libre por tercera semana</td></tr>
+<tr><td>E1 · Perfil híbrido</td><td><span class="pill p-ko">Fuera</span></td><td>Nadie por nombre: los tres motores derivan a etiquetas y plataformas</td></tr>
+<tr><td>E3 · Rescate de proyectos</td><td><span class="pill p-ko">Fuera</span></td><td>Cuatro proveedores, todos con un método bautizado y un plazo</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">6</span> Evolución</h2>
 <div class="card">
   <div class="chartbox"><canvas id="hist"></canvas></div>
-  <p style="font-size:12.5px;color:var(--mut);margin:12px 0 0">El salto GEO de esta semana confirma que el trabajo semántico se traduce en apariciones en cuanto los rastreadores vuelven a pasar. El SEO de buscadores clásicos tarda entre 3 y 6 meses.</p>
+  <p style="font-size:12.5px;color:var(--mut);margin:12px 0 0">Cada lunes se añade un punto. <b>Las series de ChatGPT y Gemini arrancan el 10 de agosto</b>, cuando la batería pasó a lanzarse entera en los tres motores: antes su denominador era 1 y no era una medición. La de Perplexity sí es continua. El SEO técnico va en línea discontinua porque es una escala distinta.</p>
 </div>
 
 <div class="foot">
-  Panel de demostración de la skill <b>analisis-geo-seo</b>. Datos ficticios. La metodología real: rastreo del DOM renderizado, comprobación de códigos de respuesta y métricas de Navigation Timing; 22 consultas lanzadas en las interfaces web de Perplexity, ChatGPT con búsqueda activa y Gemini. Las puntuaciones son estimaciones ponderadas sobre los criterios auditados, no una medición de Lighthouse.
+  Datos ficticios. Metodología real: rastreo del DOM renderizado, comprobación de códigos de respuesta y métricas de Navigation Timing; 15 consultas idénticas lanzadas en Perplexity, ChatGPT y Gemini con una conversación nueva por consulta; búsquedas adicionales y verificación directa de LinkedIn y GitHub. Las puntuaciones son estimaciones ponderadas sobre los criterios auditados, no una medición de Lighthouse.
 </div>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <script>
+// `a` = apariciones; `t` = consultas realmente lanzadas en ese motor esa semana.
+// ChatGPT y Gemini tenian t:1 hasta el 3 de agosto: por eso su serie arranca
+// de verdad el 10, y el pie del grafico lo advierte.
 const HIST = [
-  { fecha: "20 jul", geo: 0, geoTotal: 22, seo: 44 },
-  { fecha: "27 jul", geo: 0, geoTotal: 22, seo: 61 },
-  { fecha: "3 ago",  geo: 4, geoTotal: 22, seo: 84 }
+  { fecha: "20 jul", seo: 44, ppx:{a:0,t:15}, gpt:{a:0,t:1},  gem:{a:0,t:1}  },
+  { fecha: "27 jul", seo: 61, ppx:{a:2,t:15}, gpt:{a:0,t:1},  gem:{a:0,t:1}  },
+  { fecha: "3 ago",  seo: 74, ppx:{a:5,t:15}, gpt:{a:1,t:1},  gem:{a:0,t:1}  },
+  { fecha: "10 ago", seo: 84, ppx:{a:6,t:15}, gpt:{a:3,t:15}, gem:{a:1,t:15} }
 ];
+const pct = m => HIST.map(h => (h[m] && h[m].t) ? Math.round(h[m].a / h[m].t * 100) : 0);
 new Chart(document.getElementById('hist'), {
   type: 'line',
   data: {
     labels: HIST.map(h => h.fecha),
     datasets: [
-      { label: 'Visibilidad GEO (% de consultas en las que aparece)', data: HIST.map(h => Math.round(h.geo / h.geoTotal * 100)), borderColor: '#c0392b', backgroundColor: 'rgba(192,57,43,.08)', tension: .3, fill: true, pointRadius: 5 },
-      { label: 'SEO técnico (0-100)', data: HIST.map(h => h.seo), borderColor: '#2f4f8f', backgroundColor: 'rgba(47,79,143,.08)', tension: .3, fill: true, pointRadius: 5 }
+      { label: 'Perplexity (% de consultas en las que apareces)', data: pct('ppx'), borderColor: '#c0392b', tension: .3, fill: false, pointRadius: 5 },
+      { label: 'ChatGPT (%)', data: pct('gpt'), borderColor: '#1e7a4f', tension: .3, fill: false, pointRadius: 5 },
+      { label: 'Gemini (%)', data: pct('gem'), borderColor: '#b8860b', tension: .3, fill: false, pointRadius: 5 },
+      { label: 'SEO técnico (0-100)', data: HIST.map(h => h.seo), borderColor: '#2f4f8f', backgroundColor: 'rgba(47,79,143,.08)', tension: .3, fill: true, pointRadius: 5, borderDash: [5,4] }
     ]
   },
   options: {
