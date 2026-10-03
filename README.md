@@ -2,7 +2,7 @@
 
 **Mide si los motores generativos te recomiendan, y qué te falta para que lo hagan.**
 
-Una skill para Claude que lanza una batería de consultas reales a Perplexity, ChatGPT y Gemini, audita tu web para que esos motores puedan citarte, y repite el análisis cada semana registrando la evolución en un panel con histórico.
+Una skill para Claude que lanza una batería de consultas reales a Modo IA de Google, ChatGPT y Gemini, audita tu web para que esos motores puedan citarte, y repite el análisis cada semana registrando la evolución en un panel con histórico.
 
 ![Panel GEO + SEO](docs/panel1.PNG)
 
